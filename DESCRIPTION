@@ -1,0 +1,39 @@
+Package: pldamixture
+Title: Post-Linkage Data Analysis Based on Mixture Modelling
+Version: 0.0.0.1
+Authors@R: 
+    c(
+    person("Priyanjali", "Bukke", email = "pbukke@gmu.edu", role = c("aut", "cre")),
+    person("Zhenbang", "Wang", role = "aut"),
+    person("Martin", "Slawski", email = "mslawsk3@gmu.edu", role = c("aut", "cre")),
+    person("Brady", "West", role = "aut"),
+    person("Emanuel", "Ben-David", role = "aut"),
+    person("Guoqing", "Diao", role = "aut")
+    )
+Imports: survival
+Description: A package for inference in the secondary analysis setting with linked
+  data potentially containing mismatch errors. Only the linked data file may be 
+  accessible and information about the record linkage process may be limited 
+  or unavailable. Implements the 'General Framework for Regression with Mismatched 
+  Data' developed by Slawski et al., 2023. The framework uses a mixture model for
+  pairs of linked records whose two components reflect distributions conditional
+  on match status, i.e., correct match or mismatch. Inference is based on composite 
+  likelihood and the EM algorithm. The package currently supports CoxPH Regression 
+  (right-censored data only) and Generalized Linear Regression Models (Gaussian, 
+  Gamma, Poisson, and Logistic (binary models only)). Information about the 
+  underlying record linkage process can be incorporated into the method if 
+  available (e.g., assumed overall mismatch rate, safe matches, or predictors of
+  match status).
+License: GPL-2
+LazyData: true
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Author: Priyanjali Bukke [aut, cre],
+  Zhenbang Wang [aut],
+  Martin Slawski [aut, cre],
+  Brady T. West [aut],
+  Emanuel Ben-David [aut],
+  Guoqing Diao [aut]
+Maintainer: Priyanjali Bukke <pbukke@gmu.edu>,
+            Martin Slawski <mslawsk3@gmu.edu>
