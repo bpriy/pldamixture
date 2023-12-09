@@ -11,7 +11,12 @@ Authors@R:
     person("Emanuel", "Ben-David", role = "aut"),
     person("Guoqing", "Diao", role = "aut")
     )
-Imports: survival
+Imports: 
+    methods,
+    survival,
+    Matrix, 
+    stats, 
+    lattice
 Description: A package for inference in the secondary analysis setting with linked
   data potentially containing mismatch errors. Only the linked data file may be 
   accessible and information about the record linkage process may be limited 
