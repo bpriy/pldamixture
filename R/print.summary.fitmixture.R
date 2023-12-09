@@ -1,3 +1,5 @@
+#' @noRd
+#' @export
 print.summary.fitmixture <- function(summary.object, digits = max(3L, getOption("digits") - 3L),
                                      signif.stars = getOption("show.signif.stars")){
   cat("Call:", sep="\n")

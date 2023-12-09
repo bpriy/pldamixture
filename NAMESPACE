@@ -2,5 +2,6 @@
 
 S3method(predict,fitmixture)
 S3method(print,fitmixture)
+S3method(print,summary.fitmixture)
 S3method(summary,fitmixture)
 export(fit_mixture)
