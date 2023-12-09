@@ -24,7 +24,7 @@ safematches <- ifelse(lifem$hndlnk =="Hand-Linked At Some Level", TRUE, FALSE)
 mrate <- 0.05
 
 fit <- fit_mixture(age_at_death ~ poly(unit_yob, 3, raw = TRUE), data = lifem,
-                   family = "gaussian", mformula, safematches, mrate)
+                   family = "gaussian", mformula, safematches, mrate, cmaxiter = 3)
 print(fit)
 summary(fit)
 predict(fit)

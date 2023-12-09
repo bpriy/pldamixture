@@ -53,7 +53,7 @@ library(survival)
 #' mrate <- 0.05
 #'
 #' fit <- fit_mixture(age_at_death ~ poly(unit_yob, 3, raw = TRUE), data = lifem,
-#'                    family = "gaussian", mformula, safematches, mrate)
+#'                    family = "gaussian", mformula, safematches, mrate, cmaxiter = 3)
 
 #' @references Slawski, M., West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).
 #' A General Framework for Regression with Mismatched Data Based on Mixture Modeling.

@@ -1,6 +1,7 @@
 Package: pldamixture
 Title: Post-Linkage Data Analysis Based on Mixture Modelling
 Version: 0.0.0.1
+Depends: R (>= 2.10)
 Authors@R: 
     c(
     person("Priyanjali", "Bukke", email = "pbukke@gmu.edu", role = c("aut", "cre")),

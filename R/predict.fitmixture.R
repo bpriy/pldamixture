@@ -24,7 +24,7 @@
 #' ## overall mismatch rate in the data set is assumed to be ~ 0.05
 #' mrate <- 0.05
 #' fit <- fit_mixture(age_at_death ~ poly(unit_yob, 3, raw = TRUE), data = lifem,
-#'                    family = "gaussian", mformula, safematches, mrate)
+#'                    family = "gaussian", mformula, safematches, mrate, cmaxiter = 3)
 #'
 #' predict(fit)
 #'
