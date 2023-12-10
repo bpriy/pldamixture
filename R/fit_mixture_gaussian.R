@@ -251,6 +251,8 @@ for (i in 1:(d+ncol(Delta)+1)){
 names(ses) <- nam
 names(gammacur) <- colnames(logis_ps)
 
+ses[d+1] <- ses[d+1]*(2*stdcur) # delta method for SE of sigma^2
+
 # 5. OUTPUTS
 # -------------------------------------------------------------------------
 list(coefficients = betacur, dispersion = stdcur^2, match.prob = hs,
