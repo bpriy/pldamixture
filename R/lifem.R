@@ -7,7 +7,7 @@
 #' The remaining records were “purely machine-linked” (ML) based on probabilistic record linkage without clerical
 #' review. The Life-M team expects the mismatch rate among these records to be around 5% (Bailey et al.
 #' 2022). Of interest is the relationship between age at death and year of birth. The `lifem` demo data set consists of 2,159 hand-linked records
-#' and 1,079 records (for ~2:1 HL-ML ratio) that were randomly sampled from the purely machine-linked records.
+#' and 1,079 records that were randomly sampled from the purely machine-linked records (~2:1 HL-ML ratio).
 #'
 #' \itemize{
 #'   \item yob: year of birth (value from 1883 and 1906)
@@ -26,7 +26,7 @@
 #' @docType data
 #' @name lifem
 #' @usage data(lifem)
-#' @format A data frame with 156,453 rows and 6 variables
+#' @format A data frame with 3,238 rows and 6 variables
 #'
 #' @references Bailey, Martha J., Lin, Peter Z., Mohammed, A.R. Shariq, Mohnen, Paul, Murray, Jared,
 #' Zhang, Mengying, and Prettyman, Alexa. LIFE-M: The Longitudinal, Intergenerational

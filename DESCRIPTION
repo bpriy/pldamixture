@@ -1,6 +1,6 @@
 Package: pldamixture
 Title: Post-Linkage Data Analysis Based on Mixture Modelling
-Version: 0.0.0.1
+Version: 0.0.0.2
 Depends: R (>= 2.10)
 Authors@R: 
     c(
