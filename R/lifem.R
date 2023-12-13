@@ -1,12 +1,13 @@
 #' LIFE-M Data
 #'
-#' The `lifem` data set contains data from the Life-M project (\url{https://life-m.org/}) on 156,453 individuals born between 1883
+#' The `lifem` data set contains a subset of data from the Life-M project (\url{https://life-m.org/}) on 3,238 individuals born between 1883
 #' to 1906. These records were obtained from linking birth certificates and death certificates either of two
-#' ways. A fraction of the records (2,159 records) were randomly sampled to be “hand-linked at some level”.
+#' ways. A fraction of the records (2,159 records) were randomly sampled to be “hand-linked at some level” (HL).
 #' These records are high quality and were manually linked at some point by trained research assistants.
-#' The remaining records were “purely machine-linked” based on probabilistic record linkage without clerical
+#' The remaining records were “purely machine-linked” (ML) based on probabilistic record linkage without clerical
 #' review. The Life-M team expects the mismatch rate among these records to be around 5% (Bailey et al.
-#' 2022). Of interest is the relationship between age at death and year of birth.
+#' 2022). Of interest is the relationship between age at death and year of birth. The `lifem` demo data set consists of 2,159 hand-linked records
+#' and 1,079 records (for ~2:1 HL-ML ratio) that were randomly sampled from the purely machine-linked records.
 #'
 #' \itemize{
 #'   \item yob: year of birth (value from 1883 and 1906)
@@ -69,5 +70,16 @@
 #' # focus on individuals with both scores available
 #' lifem <- df %>% select(lifemid, yob, yod, surv_age, hndlnk, commf, comml)
 #' lifem <- lifem %>% filter(comml <= 1)
-#' lifem$uyob <- (lifem$yob - min(lifem$yob)) / (max(lifem$yob) - min(lifem$yob))}}
+#' lifem$uyob <- (lifem$yob - min(lifem$yob)) / (max(lifem$yob) - min(lifem$yob))
+#'
+#' ### Demo Data (n = 3,238) ###
+#' ### 2:1 (HL-ML Ratio)
+#' hl <- lifem %>% filter(hndlnk == "Hand-Linked At Some Level") #2159 life-m individuals
+#' ml <- lifem %>% filter(hndlnk == "Purely Machine-Linked") #154294 life-m individuals
+#'
+#' n = nrow(hl)*0.5
+#'
+#' set.seed(123)
+#' ml <- sample_n(ml, n)
+#' lifem <- rbind(hl, ml)}}
 "lifem"
