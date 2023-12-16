@@ -173,6 +173,13 @@ fit_mixture_cox <- function(formula, data, family,
     pcur[!is_flagged] <- num/denom
     pcur[is_flagged] <- 1
 
+    if(anyNA(pcur)){
+      warning("EM algorithm did not converge. NA observation weight(s) occurred in the E-step.")
+      return(list(coefficients =  beta_cur, m.coefficients = gammacur,
+           match.prob = hs, family = family, objective = objs[1:(iter)],
+           Lambdahat_0 = Lambdahat_0_,  g_Lambdahat_0= g_Lambdahat_0))
+    }
+
     if(!missing(mrate)){
       if(sum(Delta == 1) == n){
         glm_h <- glm(pcur[!is_flagged] ~ Delta[!is_flagged,] - 1, family = quasibinomial)
@@ -211,9 +218,18 @@ fit_mixture_cox <- function(formula, data, family,
 
     iter <- iter + 1
     objs[iter] <- nloglik(mu, cens, hs, lambdahat_0_, Lambdahat_0_)
+
+    if(is.na(objs[iter])){
+      warning("EM algorithm did not converge. NA objective value occurred.")
+      return(list(coefficients =  beta_cur, m.coefficients = gammacur,
+                  match.prob = hs, family = family, objective = objs[1:(iter)],
+                  Lambdahat_0 = Lambdahat_0_,  g_Lambdahat_0= g_Lambdahat_0))
+    }
+
     if(objs[iter] + tol > objs[iter-1]){
       break
     }
+
   }
   names(gammacur) <- colnames(logis_ps)
 

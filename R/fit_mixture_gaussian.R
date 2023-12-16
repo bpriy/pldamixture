@@ -151,6 +151,13 @@ while(iter < maxiter){
   pcur[!is_flagged] <- num/denom
   pcur[is_flagged] <- 1
 
+  if(anyNA(pcur)){
+    warning("EM algorithm did not converge. NA observation weight(s) occurred in the E-step.")
+    return(list(coefficients = betacur, dispersion = stdcur^2, match.prob = hs,
+                objective = objs[1:(iter)], family = family,
+                m.coefficients = gammacur))
+  }
+
   if(!missing(mrate)){
     if(sum(Delta == 1) == n){
       glm_h <- glm(pcur[!is_flagged] ~ Delta[!is_flagged,] - 1,
@@ -178,6 +185,14 @@ while(iter < maxiter){
 
   iter <- iter + 1
   objs[iter] <- nloglik(mucur, stdcur, hs)
+
+  if(is.na(objs[iter])){
+    warning("EM algorithm did not converge. NA objective value occurred.")
+    return(list(coefficients = betacur, dispersion = stdcur^2, match.prob = hs,
+                objective = objs[1:(iter)], family = family,
+                m.coefficients = gammacur))
+  }
+
   if(objs[iter] + tol > objs[iter-1]){
     break
   }
@@ -257,5 +272,5 @@ ses[d+1] <- ses[d+1]*(2*stdcur) # delta method for SE of sigma^2
 # -------------------------------------------------------------------------
 list(coefficients = betacur, dispersion = stdcur^2, match.prob = hs,
      objective = objs[1:(iter)], family = family, standard.errors = ses,
-     m.coefficients = gammacur, wfit = wglmfit, iter = iter)
+     m.coefficients = gammacur, wfit = wglmfit)
 }

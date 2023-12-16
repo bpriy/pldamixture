@@ -223,6 +223,13 @@ fit_mixture_glm <- function(formula, data, family,
     pcur[!is_flagged] <- num/denom
     pcur[is_flagged] <- 1
 
+    if(anyNA(pcur)){
+      warning("EM algorithm did not converge. NA observation weight(s) occurred in the E-step.")
+      return(list(coefficients = betacur, match.prob = hs,
+                  objective = objs[1:(iter)], family = family,
+                  m.coefficients = gammacur))
+    }
+
     if(!missing(mrate)){
       if(sum(Delta == 1) == n){
         glm_h <- glm(pcur[!is_flagged] ~ Delta[!is_flagged,] - 1,
@@ -269,6 +276,14 @@ fit_mixture_glm <- function(formula, data, family,
     } else {
       objs[iter] <- nloglik(mucur, hs, shape)
     }
+
+    if(is.na(objs[iter])){
+      warning("EM algorithm did not converge. NA objective value occurred.")
+      return(list(coefficients = betacur, match.prob = hs,
+                  objective = objs[1:(iter)], family = family,
+                  m.coefficients = gammacur))
+    }
+
     if(objs[iter] + tol > objs[iter-1]){
       break
     }
