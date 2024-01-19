@@ -1,7 +1,9 @@
 #' Print function for `fit_mixture()` output
 #' @description Print call and outcome model coefficients from `fit_mixture()` output
 #'
-#' @param output The result of a call to `fit_mixture()`
+#' @param x The result of a call to `fit_mixture()`
+#' @param digits number of significant digits to print
+#' @param ... for additional print arguments
 #'
 #' @examples
 #' ## commonness score of first and last names used for linkage
@@ -16,21 +18,20 @@
 #' print(fit)
 #'
 #' @export
-# https://stackoverflow.com/questions/11653127/what-does-the-function-invisible-do
-print.fitmixture <- function(output, digits = max(3L, getOption("digits") - 3L)){
+print.fitmixture <- function(x, digits = max(3L, getOption("digits") - 3L),...){
   cat("Call:\n")
-  print(output$call, quote = F, digits = digits)
+  print(x$call, quote = F, digits = digits)
   cat("\n")
 
-  if (output$family == "cox"){
-    printCoefmat(cbind(coef = output$coefficients, "exp(coef)" = exp(output$coefficients)),
+  if (x$family == "cox"){
+    printCoefmat(cbind(coef = x$coefficients, "exp(coef)" = exp(x$coefficients)),
                  quote=F, digits = digits, has.Pvalue = FALSE)
     cat("\n")
   } else {
     cat("Coefficients:", sep="\n")
-    print(format(signif(output$coefficients, digits)), print.gap = 2, quote = F)
+    print(format(signif(x$coefficients, digits)), print.gap = 2, quote = F)
     cat("\n")
   }
 
-  invisible(output)
+  invisible(x)
 }

@@ -1,30 +1,30 @@
 Package: pldamixture
 Title: Post-Linkage Data Analysis Based on Mixture Modelling
-Version: 0.0.0.2
-Depends: R (>= 2.10)
+Version: 0.1.0
+Depends: R (>= 3.5.0)
 Authors@R: 
     c(
     person("Priyanjali", "Bukke", email = "pbukke@gmu.edu", role = c("aut", "cre")),
     person("Zhenbang", "Wang", role = "aut"),
     person("Martin", "Slawski", email = "mslawsk3@gmu.edu", role = c("aut", "cre")),
-    person("Brady", "West", role = "aut"),
+    person("Brady T.", "West", role = "aut"),
     person("Emanuel", "Ben-David", role = "aut"),
     person("Guoqing", "Diao", role = "aut")
     )
-Imports: survival 
-Description: A package for inference in the secondary analysis setting with linked
+Imports: stats, survival
+Description: Perform inference in the secondary analysis setting with linked
   data potentially containing mismatch errors. Only the linked data file may be 
   accessible and information about the record linkage process may be limited 
   or unavailable. Implements the 'General Framework for Regression with Mismatched 
   Data' developed by Slawski et al., 2023. The framework uses a mixture model for
   pairs of linked records whose two components reflect distributions conditional
   on match status, i.e., correct match or mismatch. Inference is based on composite 
-  likelihood and the EM algorithm. The package currently supports CoxPH Regression 
-  (right-censored data only) and Generalized Linear Regression Models (Gaussian, 
-  Gamma, Poisson, and Logistic (binary models only)). Information about the 
-  underlying record linkage process can be incorporated into the method if 
-  available (e.g., assumed overall mismatch rate, safe matches, or predictors of
-  match status).
+  likelihood and the EM algorithm. The package currently supports Cox Proportional 
+  Hazards Regression (right-censored data only) and Generalized Linear Regression 
+  Models (Gaussian, Gamma, Poisson, and Logistic (binary models only)). Information 
+  about the underlying record linkage process can be incorporated into the method 
+  if available (e.g., assumed overall mismatch rate, safe matches, predictors of
+  match status, or predicted probabilities of correct matches).
 License: GPL-2
 LazyData: true
 Encoding: UTF-8

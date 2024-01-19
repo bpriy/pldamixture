@@ -1,3 +1,5 @@
+#' @import stats
+#' @noRd
 constrained_logistic_regression <- function(X, y, bound, cmaxiter){
   #browser()
   X <- as.matrix(X)

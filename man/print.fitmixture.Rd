@@ -4,10 +4,14 @@
 \alias{print.fitmixture}
 \title{Print function for \code{fit_mixture()} output}
 \usage{
-\method{print}{fitmixture}(output, digits = max(3L, getOption("digits") - 3L))
+\method{print}{fitmixture}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }
 \arguments{
-\item{output}{The result of a call to \code{fit_mixture()}}
+\item{x}{The result of a call to \code{fit_mixture()}}
+
+\item{digits}{number of significant digits to print}
+
+\item{...}{for additional print arguments}
 }
 \description{
 Print call and outcome model coefficients from \code{fit_mixture()} output

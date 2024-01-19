@@ -4,20 +4,22 @@
 \alias{summary.fitmixture}
 \title{Summarize \code{fit_mixture()} object}
 \usage{
-\method{summary}{fitmixture}(output)
+\method{summary}{fitmixture}(object, ...)
 }
 \arguments{
-\item{output}{The result of a call to \code{fit_mixture()}}
+\item{object}{The result of a call to \code{fit_mixture()}}
+
+\item{...}{for additional summary arguments}
 }
 \value{
 A list of results from the function called depending on the "family" specified.
 \item{call}{the matched call}
 \item{family}{assumed type of (outcome) regression model}
-\item{coefficients}{A matrix with the outcome model's coefficient estimates. For all families
-except "cox", the matrix also includes standard errors, t or z values, and p-values}
-\item{m.coefficients}{A matrix with the correct match model's coefficient estimates. For all families
+\item{coefficients}{a matrix with the outcome model's coefficient estimates for the "cox" family. For other families,
+it is a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}
+\item{m.coefficients}{a matrix with the correct match model's coefficient estimates. For all families
 except "cox", the matrix also includes standard errors}
-\item{avgcmr}{Average correct match rate among all records}
+\item{avgcmr}{average correct match rate among all records}
 \item{match.prob}{correct match probabilities for all observations}
 \item{dispersion}{the dispersion parameter estimate when the family is a Generalized
 Linear Model}

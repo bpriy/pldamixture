@@ -1,3 +1,4 @@
+#' @noRd
 fit_mixture_gaussian <- function(formula, data, family,
                                  mformula, safematches, mrate,
                                  initbeta, initgamma, fy, maxiter, tol, cmaxiter){

@@ -1,3 +1,4 @@
+#' @noRd
 fit_mixture_glm <- function(formula, data, family,
                             mformula, safematches, mrate,
                             initbeta, initgamma, fy, maxiter, tol, cmaxiter){
@@ -130,18 +131,12 @@ fit_mixture_glm <- function(formula, data, family,
 
   # 2. INITIALIZE EM-ALGORITHM
   # -------------------------------------------------------------------------
-  if(family == "poisson"){
-    fymu <- function(mu, sub){dpois(y[sub], mu[sub])}
-  }
-
-  if(family == "binomial"){
-    m <- 1
-    fymu <- function(mu, sub){dbinom(y[sub], m, mu[sub])}
-  }
-
-  if(family == "gamma"){
-    fymu <- function(mu, sub, shape){dgamma(y[sub], shape, shape/mu[sub])}
-  }
+m <- 1
+  fymu <- function(mu, sub, ...){
+  if(family == "poisson"){return(dpois(y[sub], mu[sub]))}
+  if(family == "binomial"){return(dbinom(y[sub], m, mu[sub]))}
+  if(family == "gamma"){return(dgamma(y[sub], shape, shape/mu[sub]))}
+}
 
   fymu_all_GLM <- function(mu, sub, family, shape){
     if(family == "poisson"){
@@ -168,16 +163,13 @@ fit_mixture_glm <- function(formula, data, family,
     }
   }
 
-  if (family != "gamma"){
-    nloglik <- function(mu, hs){
-      sum(-log(hs[!is_flagged] * fymu(mu, !is_flagged) +
-                 (1 - hs[!is_flagged])* fy[!is_flagged])) -
-        sum(log(fymu(mu, is_flagged)))}
-  } else {
-    nloglik <- function(mu, hs, shape){
-      sum(-log(hs[!is_flagged] * fymu(mu, !is_flagged, shape) +
-                 (1 - hs[!is_flagged])* fy[!is_flagged])) -
-        sum(log(fymu(mu, is_flagged, shape)))}
+  nloglik <- function(mu, hs, ...){
+    if(family != "gamma"){sum(-log(hs[!is_flagged] * fymu(mu, !is_flagged) +
+                                     (1 - hs[!is_flagged])* fy[!is_flagged])) -
+        sum(log(fymu(mu, is_flagged)))} else {
+          sum(-log(hs[!is_flagged] * fymu(mu, !is_flagged, shape) +
+                     (1 - hs[!is_flagged])* fy[!is_flagged])) -
+            sum(log(fymu(mu, is_flagged, shape)))}
   }
 
   ## hs

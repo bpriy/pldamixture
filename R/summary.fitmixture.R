@@ -1,16 +1,17 @@
 #' Summarize `fit_mixture()` object
 #' @description Summarize results from the adjustment approach
 #'
-#' @param output The result of a call to `fit_mixture()`
+#' @param object The result of a call to `fit_mixture()`
+#' @param ... for additional summary arguments
 #'
 #' @returns A list of results from the function called depending on the "family" specified.
 #' \item{call}{the matched call}
 #' \item{family}{assumed type of (outcome) regression model}
-#' \item{coefficients}{A matrix with the outcome model's coefficient estimates. For all families
-#' except "cox", the matrix also includes standard errors, t or z values, and p-values}
-#' \item{m.coefficients}{A matrix with the correct match model's coefficient estimates. For all families
+#' \item{coefficients}{a matrix with the outcome model's coefficient estimates for the "cox" family. For other families,
+#' it is a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}
+#' \item{m.coefficients}{a matrix with the correct match model's coefficient estimates. For all families
 #' except "cox", the matrix also includes standard errors}
-#' \item{avgcmr}{Average correct match rate among all records}
+#' \item{avgcmr}{average correct match rate among all records}
 #' \item{match.prob}{correct match probabilities for all observations}
 #' \item{dispersion}{the dispersion parameter estimate when the family is a Generalized
 #' Linear Model}
@@ -28,69 +29,68 @@
 #' summary(fit)
 #'
 #' @export
-# s3 summary - https://stackoverflow.com/questions/18684229/how-to-get-summary-to-work-with-custom-class-in-r?noredirect=1&lq=1
-summary.fitmixture <- function(output){
-  l <- length(output$coefficients)
+summary.fitmixture <- function(object,...){
+  l <- length(object$coefficients)
   l2 <- l + 1
-  if (output$family == "gaussian" | output$family == "gamma"){
-    tval <- output$coefficients/output$standard.errors[1:l]
-    df.residual <- df.residual(output$wfit)
-    pval <- 2*pt(abs(tval),df=df.residual, lower = FALSE)
+  if (object$family == "gaussian" | object$family == "gamma"){
+    tval <- object$coefficients/object$standard.errors[1:l]
+    df.residual <- df.residual(object$wfit)
+    pval <- 2*pt(abs(tval),df=df.residual, lower.tail = FALSE)
 
-    e <- length(output$standard.errors)
-    TAB <- cbind(output$coefficients, output$standard.errors[1:l],
+    e <- length(object$standard.errors)
+    TAB <- cbind(object$coefficients, object$standard.errors[1:l],
                  tval, pval)
     colnames(TAB) <- c("Estimate","Std. Error", "t value", "Pr(>|t|)")
     rownames(TAB) <- substring(rownames(TAB), first=2)
-    if (output$family == "gamma"){
-      TAB2 <- cbind(output$m.coefficients, output$standard.errors[l2:e])
+    if (object$family == "gamma"){
+      TAB2 <- cbind(object$m.coefficients, object$standard.errors[l2:e])
     } else {
-      TAB2 <- cbind(output$m.coefficients, output$standard.errors[(l2+1):e])
+      TAB2 <- cbind(object$m.coefficients, object$standard.errors[(l2+1):e])
     }
     colnames(TAB2) <- c("Estimate","Std. Error")
   }
 
-  if (output$family == "poisson" | output$family == "binomial"){
-    zval <- output$coefficients/output$standard.errors[1:l]
+  if (object$family == "poisson" | object$family == "binomial"){
+    zval <- object$coefficients/object$standard.errors[1:l]
     pval <- 2 * (1 - pnorm(abs(zval)))
 
-    e <- length(output$standard.errors)
-    TAB <- cbind(output$coefficients, output$standard.errors[1:l],
+    e <- length(object$standard.errors)
+    TAB <- cbind(object$coefficients, object$standard.errors[1:l],
                  zval, pval)
     colnames(TAB) <- c("Estimate","Std. Error", "z value", "Pr(>|z|)")
     rownames(TAB) <- substring(rownames(TAB), first=2)
-    TAB2 <- cbind(output$m.coefficients, output$standard.errors[l2:e])
+    TAB2 <- cbind(object$m.coefficients, object$standard.errors[l2:e])
     colnames(TAB2) <- c("Estimate","Std. Error")
   }
 
-  if (output$family == "cox"){
-    TAB <- cbind(output$coefficients, exp(output$coefficients))
+  if (object$family == "cox"){
+    TAB <- cbind(object$coefficients, exp(object$coefficients))
     colnames(TAB) <- c("coef","exp(coef)")
     rownames(TAB) <- substring(rownames(TAB), first=2)
-    TAB2 <- cbind(output$m.coefficients)
+    TAB2 <- cbind(object$m.coefficients)
     colnames(TAB2) <- ""
   }
 
-  if (output$family == "gaussian"){
-    TAB1 <- cbind(output$dispersion, output$standard.errors[l+1])
+  if (object$family == "gaussian"){
+    TAB1 <- cbind(object$dispersion, object$standard.errors[l+1])
     colnames(TAB1) <- c("Estimate","Std. Error")
     rownames(TAB1) <- ""
   }
 
-  summary.object <- list(call = output$call, family = output$family,
+  object <- list(call = object$call, family = object$family,
                          coefficients = TAB, m.coefficients = TAB2,
-                         avgcmr = mean(output$match.prob), match.prob = output$hs)
+                         avgcmr = mean(object$match.prob), match.prob = object$hs)
 
-  if (output$family == "gamma"){
-    summary.object <- append(summary.object, output$dispersion)
-    names(summary.object)[[length(summary.object)]] <- "dispersion"
+  if (object$family == "gamma"){
+    object <- append(object, object$dispersion)
+    names(object)[[length(object)]] <- "dispersion"
   }
 
-  if (output$family == "gaussian"){
-    summary.object <- append(summary.object, list(TAB1))
-    names(summary.object)[[length(summary.object)]] <- "dispersion"
+  if (object$family == "gaussian"){
+    object <- append(object, list(TAB1))
+    names(object)[[length(object)]] <- "dispersion"
   }
 
-  class(summary.object)    <- "summary.fitmixture"
-  summary.object
+  class(object)    <- "summary.fitmixture"
+  object
 }

@@ -1,7 +1,7 @@
 #' Prediction Method for `fit_mixture()` object
 #' @description Obtain predictions using predict.coxph, predict.glm, or predict.lm.
 #'
-#' @param output The result of a call to `fit_mixture()`
+#' @param object The result of a call to `fit_mixture()`
 #' @param newdata Optional new data to obtain predictions for. The original data is used by default.
 #' @param type The type of prediction. For the "cox" family, the choices are the linear predictor ("lp"), the risk score exp(lp) ("risk"),
 #' the expected number of events given the covariates and follow-up time ("expected"),
@@ -13,6 +13,7 @@
 #' @param na.action Function for what to do with missing values in `newdata`. The default is to predict "NA".
 #' @param reference When family = "cox", reference for centering predictions. Available options are c("strata" - default,
 #' "sample", "zero"). The default is "strata".
+#' @param ... for future predict arguments
 #'
 #' @returns Predictions based on arguments specified.
 #'
@@ -29,10 +30,10 @@
 #' predict(fit)
 #'
 #' @export
-predict.fitmixture <- function(output, newdata, type, terms = NULL, na.action = na.pass, reference = "strata"){
+predict.fitmixture <- function(object, newdata, type, terms = NULL, na.action = na.pass, reference = "strata",...){
 
-  if (output$family == "cox"){
-    object <- output$wfit
+  if (object$family == "cox"){
+    object <- object$wfit
     terms <- ifelse(is.null(terms), names(object$assign), terms)
     if (missing(newdata)) {
       if (missing(type)) {
@@ -53,7 +54,7 @@ predict.fitmixture <- function(output, newdata, type, terms = NULL, na.action = 
       }
     }
   } else {
-    object <- output$wfit
+    object <- object$wfit
     if (missing(newdata)) {
       if (missing(type)) {
         predict(object = object, na.action = na.action)

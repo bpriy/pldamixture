@@ -5,16 +5,17 @@
 \title{Prediction Method for \code{fit_mixture()} object}
 \usage{
 \method{predict}{fitmixture}(
-  output,
+  object,
   newdata,
   type,
   terms = NULL,
   na.action = na.pass,
-  reference = "strata"
+  reference = "strata",
+  ...
 )
 }
 \arguments{
-\item{output}{The result of a call to \code{fit_mixture()}}
+\item{object}{The result of a call to \code{fit_mixture()}}
 
 \item{newdata}{Optional new data to obtain predictions for. The original data is used by default.}
 
@@ -31,6 +32,8 @@ response ("response"), or model term ("terms").}
 
 \item{reference}{When family = "cox", reference for centering predictions. Available options are c("strata" - default,
 "sample", "zero"). The default is "strata".}
+
+\item{...}{for future predict arguments}
 }
 \value{
 Predictions based on arguments specified.

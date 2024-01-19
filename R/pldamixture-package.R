@@ -1,31 +1,32 @@
 #' Post-Linkage Data Analysis Based on Mixture Modelling
 #'
-#' \code{pldamixture} implements the "General Framework for Regression with
+#'@description
+#'\code{pldamixture} implements the "General Framework for Regression with
 #' Mismatched Data" developed by Slawski et al., 2023. The framework uses a
 #' mixture model for pairs of linked records whose two components reflect
 #' distributions conditional on match status, i.e., correct match or mismatch.
 #' Inference is based on composite likelihood and the EM algorithm.\cr\cr
 #' The package contains 4 functions for usage:\cr \code{fit_mixture}\cr
-#' \code{print.fitmixture}\cr \code{summary.fitmixture}\cr \code{predict.fitmixture}\cr
+#' \code{print.fitmixture}\cr \code{summary.fitmixture}\cr \code{predict.fitmixture}
 #'
 #' @name pldamixture-package
 #' @docType package
 #'
 #' @references Slawski, M., West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).
 #' A General Framework for Regression with Mismatched Data Based on Mixture Modeling.
-#' \url{https://arxiv.org/pdf/2306.00909.pdf}\cr
+#' Journal of the Royal Statistical Society (Series A). Submitted. < \url{https://arxiv.org/pdf/2306.00909.pdf} >\cr
 #'
 #' Bukke, P., Ben-David, E., Diao, G., Slawski, M., & West, B. T. (2023).
 #' Cox Proportional Hazards Regression Using Linked Data: An Approach Based on Mixture Modelling.
-#' \cr
+#' IISA Series on Statistics and Data Science. Submitted. \cr
 #'
 #' Slawski, M., Diao, G., Ben-David, E. (2021). A pseudo-likelihood approach to linear
 #' regression with partially shuffled data. Journal of Computational and Graphical
-#' Statistics. 30(4), 991-1003 \url{http://dx.doi.org/10.1080/10618600.2020.1870482}
-#' \cr
+#' Statistics. 30(4), 991-1003 < \doi{10.1080/10618600.2020.1870482} >
 #'
 #' @examples
-#' # optional inputs for linear regression adjusted for potential mismatch error
+#' # optional inputs for linear regression of age at death on year of birth,
+#' #    using a cubic polynomial specification.
 #' ## use commonness of names as predictors of match status
 #' ## first and last names were used for linkage
 #' mformula <- ~commf + comml

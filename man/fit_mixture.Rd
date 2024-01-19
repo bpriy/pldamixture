@@ -17,20 +17,21 @@ fit_mixture(
 )
 }
 \arguments{
-\item{formula}{a formula object for outcome model, with the covariates on
-the right of "~" and the response on the left. In the Coxph setting, the
-response should be provided using the \code{Surv} function.}
+\item{formula}{a formula object for the outcome model, with the covariate(s) on
+the right of "~" and the response on the left. In the Cox proportional hazards
+setting, the response should be provided using the \code{Surv} function and the
+covariates should be separated by + signs.}
 
 \item{data}{a data.frame with linked data used in "formula" and "formula.m" (optional)}
 
 \item{family}{type of regression model ("gaussian" - default, "poisson",
 "binomial", "gamma", "cox")}
 
-\item{mformula}{one-sided formula object for the mismatch indicator model, with the
+\item{mformula}{a one-sided formula object for the mismatch indicator model, with the
 covariates on the right of "~". The default is an intercept-only model corresponding
 to a constant mismatch rate)}
 
-\item{safematches}{indicator variable for safe matches (TRUE : record can be treated as a
+\item{safematches}{an indicator variable for safe matches (TRUE : record can be treated as a
 correct match and FALSE : record may be mismatched). The default is FALSE for all matches.}
 
 \item{mrate}{assumed overall mismatch rate (a proportion between 0 and 1). If
@@ -42,6 +43,8 @@ estimated marginal density of the response ("fy"), maximum iterations for the
 EM algorithm ("maxiter"), maximum iterations for the subroutine in the constrained
 logistic regression function ("cmaxiter"), and convergence tolerance for
 the termination of the EM algorithm ("tol").}
+
+\item{...}{option to directly pass "control" arguments}
 }
 \value{
 A list of results from the function called depending on the "family" specified.
@@ -49,7 +52,7 @@ A list of results from the function called depending on the "family" specified.
 \item{match.prob}{correct match probabilities for all observations}
 \item{objective}{variable that tracks the negative log pseudo-likelihood for all iterations of the EM algorithm.}
 \item{family}{type of (outcome) regression model}
-\item{standard.errors}{estimated standard errors (when family is not "cox")}
+\item{standard.errors}{estimated standard errors (not yet supported for "cox" family)}
 \item{m.coefficients}{correct match model coefficient estimates}
 \item{call}{the matched call}
 \item{wfit}{object for internal use to obtain predictions from predict function}
@@ -61,11 +64,12 @@ Linear Model}
 }
 \description{
 Perform regression adjusted for mismatched data. The function currently supports
-CoxPH Regression (right-censored data only) and Generalized Linear Regression
-Models (Gaussian, Gamma, Poisson, and Logistic (binary models only)). Information
-about the underlying record linkage process can be incorporated into the method
-if available (e.g., assumed overall mismatch rate,
-safe matches, or predictors of match status).
+Cox Proportional Hazards Regression (right-censored data only) and Generalized
+Linear Regression Models (Gaussian, Gamma, Poisson, and Logistic (binary models
+only)). Information about the underlying record linkage process can be
+incorporated into the method if available (e.g., assumed overall mismatch rate,
+safe matches, predictors of match status, or predicted probabilities of correct
+matches).
 }
 \examples{
 ## commonness score of first and last names used for linkage
@@ -81,14 +85,13 @@ fit <- fit_mixture(age_at_death ~ poly(unit_yob, 3, raw = TRUE), data = lifem,
 \references{
 Slawski, M., West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).
 A General Framework for Regression with Mismatched Data Based on Mixture Modeling.
-\url{https://arxiv.org/pdf/2306.00909.pdf}\cr
+Journal of the Royal Statistical Society (Series A). Submitted. < \url{https://arxiv.org/pdf/2306.00909.pdf} >\cr
 
 Bukke, P., Ben-David, E., Diao, G., Slawski, M., & West, B. T. (2023).
 Cox Proportional Hazards Regression Using Linked Data: An Approach Based on Mixture Modelling.
-\cr
+IISA Series on Statistics and Data Science. Submitted. \cr
 
 Slawski, M., Diao, G., Ben-David, E. (2021). A pseudo-likelihood approach to linear
 regression with partially shuffled data. Journal of Computational and Graphical
-Statistics. 30(4), 991-1003 \url{http://dx.doi.org/10.1080/10618600.2020.1870482}
-\cr
+Statistics. 30(4), 991-1003 < \doi{10.1080/10618600.2020.1870482} >
 }

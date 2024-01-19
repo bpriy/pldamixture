@@ -1,3 +1,5 @@
+#' @import survival
+#' @noRd
 fit_mixture_cox <- function(formula, data, family,
                             mformula, safematches, mrate,
                             initbeta, initgamma, fy, maxiter, tol, cmaxiter){
@@ -233,10 +235,7 @@ fit_mixture_cox <- function(formula, data, family,
   }
   names(gammacur) <- colnames(logis_ps)
 
-  # 4. STANDARD ERRORS - NA
-  # -------------------------------------------------------------------------
-
-  # 5. OUTPUTS
+  # 4. OUTPUTS
   # -------------------------------------------------------------------------
   list(coefficients =  beta_cur, m.coefficients = gammacur,
        match.prob = hs, family = family, objective = objs[1:(iter)],
