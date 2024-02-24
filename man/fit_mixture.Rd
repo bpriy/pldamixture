@@ -24,7 +24,7 @@ covariates should be separated by + signs.}
 
 \item{data}{a data.frame with linked data used in "formula" and "formula.m" (optional)}
 
-\item{family}{type of regression model ("gaussian" - default, "poisson",
+\item{family}{the type of regression model ("gaussian" - default, "poisson",
 "binomial", "gamma", "cox"). For Generalized Linear Models, standard link functions are
 used ("identity" for Gaussian, "log" for Poisson and Gamma, and "logit" for binomial).}
 
@@ -35,33 +35,33 @@ to a constant mismatch rate)}
 \item{safematches}{an indicator variable for safe matches (TRUE : record can be treated as a
 correct match and FALSE : record may be mismatched). The default is FALSE for all matches.}
 
-\item{mrate}{assumed overall mismatch rate (a proportion between 0 and 1). If
+\item{mrate}{the assumed overall mismatch rate (a proportion between 0 and 1). If
 not provided, no overall mismatch rate is assumed.}
 
-\item{control}{optional list variable to customize the initial parameter estimates
+\item{control}{an optional list variable to customize the initial parameter estimates
 ("initbeta" for the outcome model and "initgamma" for the mismatch indicator model),
 estimated marginal density of the response ("fy"), maximum iterations for the
 EM algorithm ("maxiter"), maximum iterations for the subroutine in the constrained
 logistic regression function ("cmaxiter"), and convergence tolerance for
 the termination of the EM algorithm ("tol").}
 
-\item{...}{option to directly pass "control" arguments}
+\item{...}{the option to directly pass "control" arguments}
 }
 \value{
 A list of results from the function called depending on the "family" specified.
-\item{coefficients}{outcome model coefficient estimates}
-\item{match.prob}{correct match probabilities for all observations}
-\item{objective}{variable that tracks the negative log pseudo-likelihood for all iterations of the EM algorithm.}
-\item{family}{type of (outcome) regression model}
-\item{standard.errors}{estimated standard errors. The standard errors are found using Louis' method for the "cox" family and using the sandwich formula otherwise.}
-\item{m.coefficients}{correct match model coefficient estimates}
+\item{coefficients}{the outcome model coefficient estimates}
+\item{match.prob}{the correct match probabilities for all observations}
+\item{objective}{a variable that tracks the negative log pseudo-likelihood for all iterations of the EM algorithm.}
+\item{family}{the type of (outcome) regression model}
+\item{standard.errors}{the estimated standard errors}
+\item{m.coefficients}{the correct match model coefficient estimates}
 \item{call}{the matched call}
-\item{wfit}{object for internal use to obtain predictions from predict function}
+\item{wfit}{an internal-use object for the predict function}
 \item{dispersion}{the dispersion parameter estimate when the family is a Generalized
 Linear Model}
-\item{Lambdahat_0}{baseline cumulative hazard (using weighted Breslow estimator)}
-\item{g_Lambdahat_0}{baseline cumulative hazard for the marginal density of the response variable
-(using Nelson-Aalen estimator)}
+\item{Lambdahat_0}{the baseline cumulative hazard (using weighted Breslow estimator) when the family is "cox"}
+\item{g_Lambdahat_0}{the baseline cumulative hazard for the marginal density of the response variable
+(using Nelson-Aalen estimator) when the family is "cox"}
 }
 \description{
 Perform regression adjusted for mismatched data. The function currently supports
@@ -73,7 +73,9 @@ safe matches, predictors of match status, or predicted probabilities of correct
 matches).
 }
 \note{
-The references below discuss the implemented framework in more detail.\cr
+The references below discuss the implemented framework in more detail. The standard
+errors are estimated using Louis' method for the "cox" family (Bukke et al., 2023) and
+using the sandwich formula otherwise (Slawski et al., 2023).\cr\cr
 *Corresponding Author (mslawsk3@gmu.edu)
 }
 \examples{

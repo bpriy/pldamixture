@@ -1,18 +1,17 @@
 #' Summarize `fit_mixture()` object
 #' @description Summarize results from the adjustment approach
 #'
-#' @param object The result of a call to `fit_mixture()`
+#' @param object the result of a call to `fit_mixture()`
 #' @param ... for additional summary arguments
 #'
 #' @returns A list of results from the function called depending on the "family" specified.
 #' \item{call}{the matched call}
-#' \item{family}{assumed type of (outcome) regression model}
+#' \item{family}{the assumed type of (outcome) regression model}
 #' \item{coefficients}{a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}
 #' \item{m.coefficients}{a matrix with the correct match model's coefficient estimates and standard errors}
-#' \item{avgcmr}{average correct match rate among all records}
-#' \item{match.prob}{correct match probabilities for all observations}
-#' \item{dispersion}{the estimated dispersion parameter when the family is a Generalized
-#' Linear Model}
+#' \item{avgcmr}{the average correct match rate among all records}
+#' \item{match.prob}{the correct match probabilities for all observations}
+#' \item{dispersion}{the dispersion parameter estimate when the family is a Generalized Linear Model}
 #'
 #' @examples
 #' ## commonness score of first and last names used for linkage

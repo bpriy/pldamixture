@@ -14,7 +14,7 @@ The package contains 4 functions for usage:\cr \code{fit_mixture}\cr
 \code{print.fitmixture}\cr \code{summary.fitmixture}\cr \code{predict.fitmixture}
 }
 \note{
-The references below discuss the implemented framework in more detail.\cr
+The references below discuss the implemented framework in more detail.\cr\cr
 *Corresponding Author (mslawsk3@gmu.edu)
 }
 \examples{

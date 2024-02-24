@@ -13,7 +13,7 @@
 #' @docType package
 #'
 #' @note
-#' The references below discuss the implemented framework in more detail.\cr
+#' The references below discuss the implemented framework in more detail.\cr\cr
 #' *Corresponding Author (mslawsk3@gmu.edu)
 #'
 #' @references Slawski, M.*, West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).

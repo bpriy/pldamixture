@@ -15,22 +15,22 @@
 )
 }
 \arguments{
-\item{object}{The result of a call to \code{fit_mixture()}}
+\item{object}{the result of a call to \code{fit_mixture()}}
 
-\item{newdata}{Optional new data to obtain predictions for. The original data is used by default.}
+\item{newdata}{optional new data to obtain predictions for. The original data is used by default.}
 
-\item{type}{The type of prediction. For the "cox" family, the choices are the linear predictor ("lp"), the risk score exp(lp) ("risk"),
+\item{type}{the type of prediction. For the "cox" family, the choices are the linear predictor ("lp"), the risk score exp(lp) ("risk"),
 the expected number of events given the covariates and follow-up time ("expected"),
 and the terms of the linear predictor ("terms"). The survival probability for a subject is
 equal to exp(-expected). For the "gaussian" family, the choices are response ("response") or model term ("terms").
 For the other glm families ("poisson", "binomial", "gamma"), the choices are predictions on the scale of the linear predictors ("link"),
 response ("response"), or model term ("terms").}
 
-\item{terms}{Terms when type = "terms". By default, all terms are included.}
+\item{terms}{the terms when type = "terms". By default, all terms are included.}
 
-\item{na.action}{Function for what to do with missing values in \code{newdata}. The default is to predict "NA".}
+\item{na.action}{a function for what to do with missing values in \code{newdata}. The default is to predict "NA".}
 
-\item{reference}{When family = "cox", reference for centering predictions. Available options are c("strata" - default,
+\item{reference}{when family = "cox", reference for centering predictions. Available options are c("strata" - default,
 "sample", "zero"). The default is "strata".}
 
 \item{...}{for future predict arguments}

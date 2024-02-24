@@ -7,9 +7,9 @@
 \method{print}{fitmixture}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }
 \arguments{
-\item{x}{The result of a call to \code{fit_mixture()}}
+\item{x}{the result of a call to \code{fit_mixture()}}
 
-\item{digits}{number of significant digits to print}
+\item{digits}{the number of significant digits to print}
 
 \item{...}{for additional print arguments}
 }
