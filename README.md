@@ -6,8 +6,10 @@ Bukke, P., Wang, Z., Slawski, M., West, B. T., Ben-David, E. & Diao, G. (2024). 
 
 ## References
   
-Slawski, M., West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023). A General Framework for Regression with Mismatched Data Based on Mixture Modeling. Journal of the Royal Statistical Society (Series A). Submitted. <https://arxiv.org/pdf/2306.00909.pdf>
+Slawski, M.*, West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023). A General Framework for Regression with Mismatched Data Based on Mixture Modeling. Under Review. <https://doi.org/10.48550/arXiv.2306.00909>
 
-Bukke, P., Ben-David, E., Diao, G., Slawski, M., & West, B. T. (2023). Cox Proportional Hazards Regression Using Linked Data: An Approach Based on Mixture Modelling. IISA Series on Statistics and Data Science. Submitted.
+Bukke, P., Ben-David, E., Diao, G., Slawski, M.*, & West, B. T. (2023). Cox Proportional Hazards Regression Using Linked Data: An Approach Based on Mixture Modelling. Under Review.
 
-Slawski, M., Diao, G., & Ben-David, E. (2021). A pseudo-likelihood approach to linear regression with partially shuffled data. Journal of Computational and Graphical Statistics. 30(4), 991-1003 <https://doi.org/10.1080/10618600.2020.1870482>
+Slawski, M.*, Diao, G., & Ben-David, E. (2021). A pseudo-likelihood approach to linear regression with partially shuffled data. Journal of Computational and Graphical Statistics. 30(4), 991-1003 <https://doi.org/10.1080/10618600.2020.1870482>
+
+*Corresponding Author (mslawsk3@gmu.edu)

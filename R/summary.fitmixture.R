@@ -7,13 +7,11 @@
 #' @returns A list of results from the function called depending on the "family" specified.
 #' \item{call}{the matched call}
 #' \item{family}{assumed type of (outcome) regression model}
-#' \item{coefficients}{a matrix with the outcome model's coefficient estimates for the "cox" family. For other families,
-#' it is a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}
-#' \item{m.coefficients}{a matrix with the correct match model's coefficient estimates. For all families
-#' except "cox", the matrix also includes standard errors}
+#' \item{coefficients}{a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}
+#' \item{m.coefficients}{a matrix with the correct match model's coefficient estimates and standard errors}
 #' \item{avgcmr}{average correct match rate among all records}
 #' \item{match.prob}{correct match probabilities for all observations}
-#' \item{dispersion}{the dispersion parameter estimate when the family is a Generalized
+#' \item{dispersion}{the estimated dispersion parameter when the family is a Generalized
 #' Linear Model}
 #'
 #' @examples
@@ -24,7 +22,7 @@
 #' ## overall mismatch rate in the data set is assumed to be ~ 0.05
 #' mrate <- 0.05
 #' fit <- fit_mixture(age_at_death ~ poly(unit_yob, 3, raw = TRUE), data = lifem,
-#'                    family = "gaussian", mformula, safematches, mrate, cmaxiter = 3)
+#'                    family = "gaussian", mformula, safematches, mrate)
 #'
 #' summary(fit)
 #'
@@ -64,11 +62,17 @@ summary.fitmixture <- function(object,...){
   }
 
   if (object$family == "cox"){
-    TAB <- cbind(object$coefficients, exp(object$coefficients))
-    colnames(TAB) <- c("coef","exp(coef)")
+    zval <- object$coefficients/object$standard.errors[1:l]
+    pval <- 2 * (1 - pnorm(abs(zval)))
+
+    e <- length(object$standard.errors)
+    TAB <- cbind(object$coefficients, exp(object$coefficients),
+                 object$standard.errors[1:l],
+                 zval, pval)
+    colnames(TAB) <- c("coef", "exp(coef)", "se(coef)", "z value", "Pr(>|z|)")
     rownames(TAB) <- substring(rownames(TAB), first=2)
-    TAB2 <- cbind(object$m.coefficients)
-    colnames(TAB2) <- ""
+    TAB2 <- cbind(object$m.coefficients, object$standard.errors[l2:e])
+    colnames(TAB2) <- c("Estimate","Std. Error")
   }
 
   if (object$family == "gaussian"){

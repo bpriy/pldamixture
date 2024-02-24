@@ -15,13 +15,11 @@
 A list of results from the function called depending on the "family" specified.
 \item{call}{the matched call}
 \item{family}{assumed type of (outcome) regression model}
-\item{coefficients}{a matrix with the outcome model's coefficient estimates for the "cox" family. For other families,
-it is a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}
-\item{m.coefficients}{a matrix with the correct match model's coefficient estimates. For all families
-except "cox", the matrix also includes standard errors}
+\item{coefficients}{a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}
+\item{m.coefficients}{a matrix with the correct match model's coefficient estimates and standard errors}
 \item{avgcmr}{average correct match rate among all records}
 \item{match.prob}{correct match probabilities for all observations}
-\item{dispersion}{the dispersion parameter estimate when the family is a Generalized
+\item{dispersion}{the estimated dispersion parameter when the family is a Generalized
 Linear Model}
 }
 \description{
@@ -35,7 +33,7 @@ safematches <- ifelse(lifem$hndlnk =="Hand-Linked At Some Level", TRUE, FALSE)
 ## overall mismatch rate in the data set is assumed to be ~ 0.05
 mrate <- 0.05
 fit <- fit_mixture(age_at_death ~ poly(unit_yob, 3, raw = TRUE), data = lifem,
-                   family = "gaussian", mformula, safematches, mrate, cmaxiter = 3)
+                   family = "gaussian", mformula, safematches, mrate)
 
 summary(fit)
 

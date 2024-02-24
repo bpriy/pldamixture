@@ -235,10 +235,109 @@ fit_mixture_cox <- function(formula, data, family,
   }
   names(gammacur) <- colnames(logis_ps)
 
-  # 4. OUTPUTS
+  # 4. STANDARD ERRORS
+  # -------------------------------------------------------------------------
+  Xorig <- X # design matrix
+  yorig <- y # response
+  censoring <- cens # censoring indicator (1 if yes, 0 if no)
+  muorig <- mu # Xorig %*% betacur
+  Z <- Delta # m-model covariates
+
+  ## PART 1: Run k Monte-Carlo Samples (i.e., of the {m_i}_{i=1}^n's)
+  k <- 1000
+
+  for (sample in 1:k){
+    # 1. Sample {m_i^[k]}_{i=1}^n given data, \hat{\beta}, \hat{\gamma}
+    m_i <- rbinom(n, size = 1, prob = (1-pcur)) # 1-pcur is conditional probability of mismatch
+
+    # 2. Subset Data w/ m_i = 0
+    X <- Xorig[m_i == 0,,drop = FALSE]
+    y <- yorig[m_i == 0,drop = FALSE]
+    cens <- censoring[m_i == 0,drop = FALSE]
+    mu <- muorig[m_i == 0,,drop = FALSE]
+
+    zgam <- Z %*% gammacur
+
+    pb <- length(beta_cur)
+    pg  <- length(gammacur)
+    pt <- pb + pg
+
+    delta <- 1-cens # event indicator (1 if yes, 0 if no)
+    n_event <- sum(delta)
+    risk_set <- apply(as.matrix(y[delta == 1]), 1, function(yi) which(y >= yi)) # find R(y_i)
+
+    # 3. Evaluate Gradient w.r.t \hat{\beta} & \hat{\gamma}
+    #   derivative of -ve partial log-likelihood
+    s_bg <- numeric(pt)
+    val2 <- numeric(n_event)
+    for (d1 in 1:pt){
+      if (d1 <= pb){
+        for(i in 1:n_event){
+          val2[i] <- sum(exp(mu[risk_set[[i]]])*X[risk_set[[i]],d1])/sum(exp(mu[risk_set[[i]]]))
+        }
+        s_bg[d1] <- -sum(X[(delta ==1),d1]) + sum(val2)
+      } else {
+        indz <- d1 - pb
+        s_bg[d1] <- sum((exp(zgam)*Z[,indz])/(1+exp(zgam)) - (1-m_i)*Z[,indz])
+      }
+    }
+    if (sample == 1){
+      gradient <- s_bg
+    } else{
+      gradient <- rbind(gradient, s_bg)
+    }
+
+    # 4. Evaluate Hessian w.r.t \hat{\beta} & \hat{\gamma}
+    #    second derivative of -ve partial log-likelihood
+    h_bg <- matrix(NA, nrow = pt, ncol = pt)
+    low <- numeric(n_event)
+    high <- numeric(n_event)
+    dhigh <- numeric(n_event)
+    dlow <- numeric(n_event)
+    val <- numeric(n_event)
+    for (d1 in 1:pt){
+      for (d2 in 1:pt){
+        if (d1 <= pb & d2 <= pb){
+          for(i in 1:n_event){
+            low[i] <- sum(exp(mu[risk_set[[i]]]))
+            dlow[i] <- sum(exp(mu[risk_set[[i]]])*X[risk_set[[i]],d2])
+            high[i] <- sum(exp(mu[risk_set[[i]]])*X[risk_set[[i]],d1])
+            dhigh[i] <- sum(exp(mu[risk_set[[i]]])*X[risk_set[[i]],d1]*X[risk_set[[i]],d2])
+            val[i] <- (low[i]*dhigh[i] - high[i]*dlow[i])/(low[i])^2
+          }
+          h_bg[d1,d2] <- sum(val)
+        }
+
+        if (d1 <= pb & d2 > pb | d1 > pb & d2 <= pb){
+          h_bg[d1,d2] <- 0
+        }
+
+        if (d1 > pb & d2 > pb){
+          indz1 <- d1 - pb
+          indz2 <- d2 - pb
+          low <- (1+exp(zgam))
+          dlow <- (exp(zgam)*Z[,indz2])
+          high <- (exp(zgam)*Z[,indz1])
+          dhigh <- (exp(zgam)*Z[,indz1]*Z[,indz2])
+          h_bg[d1,d2] <- sum((low *dhigh  - high *dlow)/(low)^2)
+        }
+      }
+    }
+
+    if (sample == 1){
+      hessian <- h_bg
+    } else{
+      hessian <- array(c(hessian, h_bg), dim = c(pt, pt, sample))
+    }
+  }
+  row.names(gradient) <- NULL
+  hmcg <- apply(hessian,c(1,2),mean) - cov(gradient)
+  se <- sqrt(diag(solve(t(hmcg))))
+
+  # 5. OUTPUTS
   # -------------------------------------------------------------------------
   list(coefficients =  beta_cur, m.coefficients = gammacur,
        match.prob = hs, family = family, objective = objs[1:(iter)],
        Lambdahat_0 = Lambdahat_0_,  g_Lambdahat_0= g_Lambdahat_0,
-       wfit = creg)
+       wfit = creg, standard.errors = se)
 }

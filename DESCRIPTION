@@ -1,4 +1,5 @@
 Package: pldamixture
+Type: Package
 Title: Post-Linkage Data Analysis Based on Mixture Modelling
 Version: 0.1.0
 Depends: R (>= 3.5.0)
@@ -6,7 +7,7 @@ Authors@R:
     c(
     person("Priyanjali", "Bukke", email = "pbukke@gmu.edu", role = c("aut", "cre")),
     person("Zhenbang", "Wang", role = "aut"),
-    person("Martin", "Slawski", email = "mslawsk3@gmu.edu", role = c("aut", "cre")),
+    person("Martin", "Slawski", email = "mslawsk3@gmu.edu", role = "aut"),
     person("Brady T.", "West", role = "aut"),
     person("Emanuel", "Ben-David", role = "aut"),
     person("Guoqing", "Diao", role = "aut")
@@ -14,8 +15,8 @@ Authors@R:
 Imports: stats, survival
 Description: Perform inference in the secondary analysis setting with linked
   data potentially containing mismatch errors. Only the linked data file may be 
-  accessible and information about the record linkage process may be limited 
-  or unavailable. Implements the 'General Framework for Regression with Mismatched 
+  accessible and information about the record linkage process may be limited or 
+  unavailable. Implements the 'General Framework for Regression with Mismatched 
   Data' developed by Slawski et al., 2023. The framework uses a mixture model for
   pairs of linked records whose two components reflect distributions conditional
   on match status, i.e., correct match or mismatch. Inference is based on composite 
@@ -32,9 +33,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Author: Priyanjali Bukke [aut, cre],
   Zhenbang Wang [aut],
-  Martin Slawski [aut, cre],
+  Martin Slawski [aut] (mslawsk3@gmu.edu),
   Brady T. West [aut],
   Emanuel Ben-David [aut],
   Guoqing Diao [aut]
-Maintainer: Priyanjali Bukke <pbukke@gmu.edu>,
-            Martin Slawski <mslawsk3@gmu.edu>
+Maintainer: Priyanjali Bukke <pbukke@gmu.edu>
+URL: https://github.com/bpriy/pldamixture

@@ -13,6 +13,10 @@ Inference is based on composite likelihood and the EM algorithm.\cr\cr
 The package contains 4 functions for usage:\cr \code{fit_mixture}\cr
 \code{print.fitmixture}\cr \code{summary.fitmixture}\cr \code{predict.fitmixture}
 }
+\note{
+The references below discuss the implemented framework in more detail.\cr
+*Corresponding Author (mslawsk3@gmu.edu)
+}
 \examples{
 # optional inputs for linear regression of age at death on year of birth,
 #    using a cubic polynomial specification.
@@ -25,21 +29,21 @@ safematches <- ifelse(lifem$hndlnk =="Hand-Linked At Some Level", TRUE, FALSE)
 mrate <- 0.05
 
 fit <- fit_mixture(age_at_death ~ poly(unit_yob, 3, raw = TRUE), data = lifem,
-                   family = "gaussian", mformula, safematches, mrate, cmaxiter = 3)
+                   family = "gaussian", mformula, safematches, mrate)
 print(fit)
 summary(fit)
 predict(fit)
 }
 \references{
-Slawski, M., West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).
+Slawski, M.*, West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).
 A General Framework for Regression with Mismatched Data Based on Mixture Modeling.
-Journal of the Royal Statistical Society (Series A). Submitted. < \url{https://arxiv.org/pdf/2306.00909.pdf} >\cr
+Under Review. < \doi{10.48550/arXiv.2306.00909} >\cr
 
-Bukke, P., Ben-David, E., Diao, G., Slawski, M., & West, B. T. (2023).
+Bukke, P., Ben-David, E., Diao, G., Slawski, M.*, & West, B. T. (2023).
 Cox Proportional Hazards Regression Using Linked Data: An Approach Based on Mixture Modelling.
-IISA Series on Statistics and Data Science. Submitted. \cr
+Under Review. \cr
 
-Slawski, M., Diao, G., Ben-David, E. (2021). A pseudo-likelihood approach to linear
+Slawski, M.*, Diao, G., Ben-David, E. (2021). A pseudo-likelihood approach to linear
 regression with partially shuffled data. Journal of Computational and Graphical
 Statistics. 30(4), 991-1003 < \doi{10.1080/10618600.2020.1870482} >
 }
