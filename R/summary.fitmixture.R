@@ -1,5 +1,5 @@
-#' Summarize `fit_mixture()` object
-#' @description Summarize results from the adjustment approach
+#' Summarize a fitmixture object
+#' @description Summarize results from a `fit_mixture()` object
 #'
 #' @param object the result of a call to `fit_mixture()`
 #' @param ... for additional summary arguments

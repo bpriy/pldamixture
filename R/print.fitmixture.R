@@ -1,5 +1,5 @@
-#' Print function for `fit_mixture()` output
-#' @description Print call and outcome model coefficients from `fit_mixture()` output
+#' Print a fitmixture object
+#' @description Print call and outcome model coefficients from a `fit_mixture()` object
 #'
 #' @param x the result of a call to `fit_mixture()`
 #' @param digits the number of significant digits to print

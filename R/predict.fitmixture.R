@@ -1,5 +1,5 @@
-#' Prediction Method for `fit_mixture()` object
-#' @description Obtain predictions using predict.coxph, predict.glm, or predict.lm.
+#' Predictions from a fitmixture object
+#' @description Obtain predictions from a `fit_mixture()` object using `predict.coxph()`, `predict.glm()`, or `predict.lm()`.
 #'
 #' @param object the result of a call to `fit_mixture()`
 #' @param newdata optional new data to obtain predictions for. The original data is used by default.

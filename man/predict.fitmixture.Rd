@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict.fitmixture.R
 \name{predict.fitmixture}
 \alias{predict.fitmixture}
-\title{Prediction Method for \code{fit_mixture()} object}
+\title{Predictions from a fitmixture object}
 \usage{
 \method{predict}{fitmixture}(
   object,
@@ -39,7 +39,7 @@ response ("response"), or model term ("terms").}
 Predictions based on arguments specified.
 }
 \description{
-Obtain predictions using predict.coxph, predict.glm, or predict.lm.
+Obtain predictions from a \code{fit_mixture()} object using \code{predict.coxph()}, \code{predict.glm()}, or \code{predict.lm()}.
 }
 \examples{
 ## commonness score of first and last names used for linkage

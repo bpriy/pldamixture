@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.fitmixture.R
 \name{print.fitmixture}
 \alias{print.fitmixture}
-\title{Print function for \code{fit_mixture()} output}
+\title{Print a fitmixture object}
 \usage{
 \method{print}{fitmixture}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }
@@ -14,7 +14,7 @@
 \item{...}{for additional print arguments}
 }
 \description{
-Print call and outcome model coefficients from \code{fit_mixture()} output
+Print call and outcome model coefficients from a \code{fit_mixture()} object
 }
 \examples{
 ## commonness score of first and last names used for linkage

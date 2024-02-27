@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.fitmixture.R
 \name{summary.fitmixture}
 \alias{summary.fitmixture}
-\title{Summarize \code{fit_mixture()} object}
+\title{Summarize a fitmixture object}
 \usage{
 \method{summary}{fitmixture}(object, ...)
 }
@@ -22,7 +22,7 @@ A list of results from the function called depending on the "family" specified.
 \item{dispersion}{the dispersion parameter estimate when the family is a Generalized Linear Model}
 }
 \description{
-Summarize results from the adjustment approach
+Summarize results from a \code{fit_mixture()} object
 }
 \examples{
 ## commonness score of first and last names used for linkage
