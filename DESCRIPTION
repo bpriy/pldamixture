@@ -7,7 +7,8 @@ Authors@R:
     c(
     person("Priyanjali", "Bukke", email = "pbukke@gmu.edu", role = c("aut", "cre")),
     person("Zhenbang", "Wang", role = "aut"),
-    person("Martin", "Slawski", email = "mslawsk3@gmu.edu", role = "aut"),
+    person("Martin", "Slawski", email = "mslawsk3@gmu.edu", role = "aut", 
+    comment = "mslawsk3@gmu.edu"),
     person("Brady T.", "West", role = "aut"),
     person("Emanuel", "Ben-David", role = "aut"),
     person("Guoqing", "Diao", role = "aut")
@@ -31,11 +32,5 @@ LazyData: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Author: Priyanjali Bukke [aut, cre],
-  Zhenbang Wang [aut],
-  Martin Slawski [aut] (mslawsk3@gmu.edu),
-  Brady T. West [aut],
-  Emanuel Ben-David [aut],
-  Guoqing Diao [aut]
 Maintainer: Priyanjali Bukke <pbukke@gmu.edu>
 URL: https://github.com/bpriy/pldamixture

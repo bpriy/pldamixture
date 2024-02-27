@@ -1,6 +1,6 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 3 notes
+0 errors | 0 warnings | 2 notes
 
 * This is a new release.
 
@@ -11,9 +11,5 @@
     Status: 403
     Message: Forbidden" 
   - The URL was checked and is valid.
-
-* Author field differs from that derived from Authors@R 
-  - email address is included in the Author field 
-    for one of our authors
   
   
