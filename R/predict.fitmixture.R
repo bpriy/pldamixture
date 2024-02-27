@@ -1,4 +1,4 @@
-#' Predictions from a fitmixture object
+#' Predictions From a "fitmixture" Object
 #' @description Obtain predictions from a `fit_mixture()` object using `predict.coxph()`, `predict.glm()`, or `predict.lm()`.
 #'
 #' @param object the result of a call to `fit_mixture()`

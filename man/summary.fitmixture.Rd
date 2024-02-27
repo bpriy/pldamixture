@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.fitmixture.R
 \name{summary.fitmixture}
 \alias{summary.fitmixture}
-\title{Summarize a fitmixture object}
+\title{Summarize a "fitmixture" Object}
 \usage{
 \method{summary}{fitmixture}(object, ...)
 }

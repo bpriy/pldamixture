@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.fitmixture.R
 \name{print.fitmixture}
 \alias{print.fitmixture}
-\title{Print a fitmixture object}
+\title{Print a "fitmixture" Object}
 \usage{
 \method{print}{fitmixture}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }

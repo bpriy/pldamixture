@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict.fitmixture.R
 \name{predict.fitmixture}
 \alias{predict.fitmixture}
-\title{Predictions from a fitmixture object}
+\title{Predictions From a "fitmixture" Object}
 \usage{
 \method{predict}{fitmixture}(
   object,

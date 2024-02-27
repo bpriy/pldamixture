@@ -1,4 +1,4 @@
-#' Summarize a fitmixture object
+#' Summarize a "fitmixture" Object
 #' @description Summarize results from a `fit_mixture()` object
 #'
 #' @param object the result of a call to `fit_mixture()`

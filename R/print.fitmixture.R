@@ -1,4 +1,4 @@
-#' Print a fitmixture object
+#' Print a "fitmixture" Object
 #' @description Print call and outcome model coefficients from a `fit_mixture()` object
 #'
 #' @param x the result of a call to `fit_mixture()`
