@@ -48,7 +48,7 @@ the termination of the EM algorithm ("tol").}
 \item{...}{the option to directly pass "control" arguments}
 }
 \value{
-A list of results from the function called depending on the "family" specified.
+a list of results from the function called depending on the "family" specified.
 \item{coefficients}{the outcome model coefficient estimates}
 \item{match.prob}{the correct match probabilities for all observations}
 \item{objective}{a variable that tracks the negative log pseudo-likelihood for all iterations of the EM algorithm.}

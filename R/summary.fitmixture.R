@@ -4,7 +4,7 @@
 #' @param object the result of a call to `fit_mixture()`
 #' @param ... for additional summary arguments
 #'
-#' @returns A list of results from the function called depending on the "family" specified.
+#' @returns a list of results from the function called depending on the "family" specified.
 #' \item{call}{the matched call}
 #' \item{family}{the assumed type of (outcome) regression model}
 #' \item{coefficients}{a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}

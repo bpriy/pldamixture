@@ -26,7 +26,7 @@
 #' @docType data
 #' @name lifem
 #' @usage data(lifem)
-#' @format A data frame with 3,238 rows and 6 variables
+#' @format a data frame with 3,238 rows and 6 variables
 #'
 #' @references Bailey, Martha J., Lin, Peter Z., Mohammed, A.R. Shariq, Mohnen, Paul, Murray, Jared,
 #' Zhang, Mengying, and Prettyman, Alexa. LIFE-M: The Longitudinal, Intergenerational

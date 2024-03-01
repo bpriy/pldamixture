@@ -33,7 +33,7 @@ library(survival)
 #' the termination of the EM algorithm ("tol").
 #' @param ... the option to directly pass "control" arguments
 #'
-#' @returns A list of results from the function called depending on the "family" specified.
+#' @returns a list of results from the function called depending on the "family" specified.
 #' \item{coefficients}{the outcome model coefficient estimates}
 #' \item{match.prob}{the correct match probabilities for all observations}
 #' \item{objective}{a variable that tracks the negative log pseudo-likelihood for all iterations of the EM algorithm.}

@@ -5,7 +5,7 @@
 \alias{lifem}
 \title{LIFE-M Data}
 \format{
-A data frame with 3,238 rows and 6 variables
+a data frame with 3,238 rows and 6 variables
 }
 \usage{
 data(lifem)

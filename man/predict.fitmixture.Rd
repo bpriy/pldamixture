@@ -36,7 +36,7 @@ response ("response"), or model term ("terms").}
 \item{...}{for future predict arguments}
 }
 \value{
-Predictions based on arguments specified.
+a vector or matrix of predictions based on arguments specified.
 }
 \description{
 Obtain predictions from a \code{fit_mixture()} object using \code{predict.coxph()}, \code{predict.glm()}, or \code{predict.lm()}.

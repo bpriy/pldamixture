@@ -15,7 +15,7 @@
 #' "sample", "zero"). The default is "strata".
 #' @param ... for future predict arguments
 #'
-#' @returns Predictions based on arguments specified.
+#' @returns a vector or matrix of predictions based on arguments specified.
 #'
 #' @examples
 #' ## commonness score of first and last names used for linkage

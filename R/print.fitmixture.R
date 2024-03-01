@@ -5,6 +5,8 @@
 #' @param digits the number of significant digits to print
 #' @param ... for additional print arguments
 #'
+#' @returns invisibly returns the `fit_mixture()` object that is provided as an argument
+#'
 #' @examples
 #' ## commonness score of first and last names used for linkage
 #' mformula <- ~commf + comml
