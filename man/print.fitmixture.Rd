@@ -13,6 +13,9 @@
 
 \item{...}{for additional print arguments}
 }
+\value{
+invisibly returns the \code{fit_mixture()} object that is provided as an argument
+}
 \description{
 Print call and outcome model coefficients from a \code{fit_mixture()} object
 }
