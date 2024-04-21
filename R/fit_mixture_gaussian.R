@@ -65,7 +65,7 @@ if (fy != "default"){
               for each observation")}
   fy <- "default"
 } else {
-  g <- function(y){dnorm(y, mean = mean(y), sd = sd(y))} # Gaussian density
+  g <- function(yval){dnorm(yval, mean = mean(y), sd = sd(y))} # Gaussian density
   fy <- g(y)
 }
 
