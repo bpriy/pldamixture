@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.1.2",
+    "Version": "4.3.2",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -11,11 +11,12 @@
   "Packages": {
     "Matrix": {
       "Package": "Matrix",
-      "Version": "1.3-4",
+      "Version": "1.6-1.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
+        "grDevices",
         "graphics",
         "grid",
         "lattice",
@@ -23,11 +24,11 @@
         "stats",
         "utils"
       ],
-      "Hash": "4ed05e9c9726267e4a5872e09c04587c"
+      "Hash": "1a00d4828f33a9d690806e98bd17150c"
     },
     "lattice": {
       "Package": "lattice",
-      "Version": "0.20-45",
+      "Version": "0.21-9",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -38,7 +39,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "b64cdbb2b340437c4ee047a1f4c4377b"
+      "Hash": "5558c61e0136e247252f5f952cdaad6a"
     },
     "renv": {
       "Package": "renv",
@@ -52,7 +53,7 @@
     },
     "survival": {
       "Package": "survival",
-      "Version": "3.2-13",
+      "Version": "3.5-7",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -64,7 +65,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "6f0a0fadc63bc6570fe172770f15bbc4"
+      "Hash": "b8e943d262c3da0b0febd3e04517c197"
     }
   }
 }
