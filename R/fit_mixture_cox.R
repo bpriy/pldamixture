@@ -82,10 +82,11 @@ fit_mixture_cox <- function(formula, data, family,
   } else {
     survf0 <- survfit(Surv(y, event = 1 - cens) ~ 1)
     times <- survf0$time
+    matchytimes <- sapply(y, function(x) which.min(abs(times - x)))
     D <- c(survf0$cumhaz[1], diff(survf0$cumhaz)/diff(times))
 
-    g_lambdahat_0 <- D[match(y,times)]
-    g_Lambdahat_0 <- survf0$cumhaz[match(y,times)]
+    g_lambdahat_0 <- D[matchytimes]
+    g_Lambdahat_0 <- survf0$cumhaz[matchytimes]
 
     fy <- g_lambdahat_0^(1-cens) * exp(-g_Lambdahat_0)
   }
@@ -144,9 +145,10 @@ fit_mixture_cox <- function(formula, data, family,
   Breslow_Estimator <- basehaz(creg, centered=FALSE)
   cumhazard <- Breslow_Estimator$hazard
   times <- Breslow_Estimator$time
+  matchytimes <- sapply(y, function(x) which.min(abs(times - x)))
   D1 <-c(cumhazard[1], diff(cumhazard)/diff(times))
-  lambdahat_0 <- D1[match(y,times)]
-  Lambdahat_0 <- cumhazard[match(y,times)]
+  lambdahat_0 <- D1[matchytimes]
+  Lambdahat_0 <- cumhazard[matchytimes]
   nloglik_cur <- nloglik(mu, cens, hs, lambdahat_0, Lambdahat_0)
   objs <- numeric(maxiter)
   objs[iter] <- nloglik_cur
@@ -210,10 +212,11 @@ fit_mixture_cox <- function(formula, data, family,
     Breslow_Estimator <- basehaz(creg, centered=FALSE)
     cumhazard <- Breslow_Estimator$hazard
     times <- Breslow_Estimator$time
+    matchytimes <- sapply(y, function(x) which.min(abs(times - x)))
     D1 <- c(cumhazard[1], diff(cumhazard)/diff(times))
 
-    lambdahat_0_ <- D1[match(y,times)]
-    Lambdahat_0_ <- cumhazard[match(y,times)]
+    lambdahat_0_ <- D1[matchytimes]
+    Lambdahat_0_ <- cumhazard[matchytimes]
 
     track_lam[iter+1,] <- lambdahat_0_
     track_Lam[iter+1,] <- Lambdahat_0_
