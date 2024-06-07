@@ -10,5 +10,10 @@
 
 * `fit_mixture_cox`: replaced match(y,times) to improve handling of survival time ties. 
 
+## Other
+
+* DESCRIPTION: arXiv link re-formatted in the DESCRIPTION file  
+
+
 
 
