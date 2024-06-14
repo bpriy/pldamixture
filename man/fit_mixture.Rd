@@ -50,7 +50,7 @@ the termination of the EM algorithm ("tol").}
 \value{
 a list of results from the function called depending on the "family" specified.
 \item{coefficients}{the outcome model coefficient estimates}
-\item{match.prob}{the correct match probabilities for all observations}
+\item{match.prob}{the posterior correct match probabilities for observations given parameter estimates}
 \item{objective}{a variable that tracks the negative log pseudo-likelihood for all iterations of the EM algorithm.}
 \item{family}{the type of (outcome) regression model}
 \item{standard.errors}{the estimated standard errors}

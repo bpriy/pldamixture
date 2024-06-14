@@ -18,7 +18,7 @@ a list of results from the function called depending on the "family" specified.
 \item{coefficients}{a matrix with the outcome model's coefficient estimates, standard errors, t or z values, and p-values}
 \item{m.coefficients}{a matrix with the correct match model's coefficient estimates and standard errors}
 \item{avgcmr}{the average correct match rate among all records}
-\item{match.prob}{the correct match probabilities for all observations}
+\item{match.prob}{the posterior correct match probabilities for observations given parameter estimates}
 \item{dispersion}{the dispersion parameter estimate when the family is a Generalized Linear Model}
 }
 \description{
