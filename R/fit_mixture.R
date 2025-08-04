@@ -92,21 +92,21 @@ fit_mixture <- function(formula, data, family = "gaussian",
   if ("initbeta" %in% names(dcontrols)){
     initbeta <- dcontrols$initbeta
   } else {
-    initbeta <- ifelse("initbeta" %in% names(control), control$initbeta, "default")
-  }
+    initbeta <- if("initbeta" %in% names(control)){control$initbeta} else{"default"}
+  }  
 
   if ("initgamma" %in% names(dcontrols)){
     initgamma <- dcontrols$initgamma
   } else {
-    initgamma <- ifelse("initgamma" %in% names(control), control$initgamma, "default")
+    initgamma <- if("initgamma" %in% names(control)){control$initgamma} else{"default"}
   }
 
   if ("fy" %in% names(dcontrols)){
     fy <- dcontrols$fy
   } else {
-    fy <- ifelse("fy" %in% names(control), control$fy, "default")
+    fy <- if("fy" %in% names(control)){control$fy} else{"default"}
   }
-
+  
   if ("maxiter" %in% names(dcontrols)){
     maxiter <- dcontrols$maxiter
   } else {
