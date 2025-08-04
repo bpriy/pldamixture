@@ -88,7 +88,7 @@ if (initgamma != "default"){
   gammacur <- "default"
 } else {
   if(!missing(mrate)){
-    if(sum(Delta == 1) == n){
+    if(identical(Delta, matrix(nrow = n, ncol = 1, data = 1))){
       gammacur <- rep(-logitbound, ncol(Delta))
     } else {
       gammacur <- c(min(logitbound, 0), rep(0, ncol(Delta)-1))
@@ -160,7 +160,7 @@ while(iter < maxiter){
   }
 
   if(!missing(mrate)){
-    if(sum(Delta == 1) == n){
+    if(identical(Delta, matrix(nrow = n, ncol = 1, data = 1))){
       glm_h <- glm(pcur[!is_flagged] ~ Delta[!is_flagged,] - 1,
                    family = quasibinomial)
       gammacur <- max(coef(glm_h), -logitbound)
