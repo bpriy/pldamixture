@@ -1,6 +1,9 @@
 ### Updates On GitHub:
   
 * `m.prob`: documentation to "posterior correct match probabilities for observations given parameter estimates"
+* `fit_mixture_gaussian`, `fit_mixture_cox`, and `fit_mixture_glm`: replace sum(Delta == 1) == n, which can be true when using a non-default (not intercept-only) mformula.
+* `fit_mixture`: data can be a data.frame or list.
+* `fit_mixture`: update ifelse() statements used to define fy, initbeta, and initgamma when the control arguments are specified. 
 
 # pldamixture 0.1.1
 
