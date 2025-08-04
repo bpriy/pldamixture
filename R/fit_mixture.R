@@ -141,7 +141,7 @@ fit_mixture <- function(formula, data, family = "gaussian",
 if(missing(formula)){ stop("Error: a formula for the outcome model is required")}
 if(!inherits(formula, "formula")){ stop("Error: formula should be a formula object")}
 
-if(!missing(data) && !is.data.frame(data)){ stop("Error: data should be a data.frame")}
+if(!missing(data) && (!is.data.frame(data) & !is.list(data))){ stop("Error: data should be a data.frame or list")}
 
 if(!(family %in% c("gaussian", "poisson", "binomial", "gamma", "cox"))){
   stop("Error: the family should be gaussian, poisson, binomial, gamma, or cox")}
