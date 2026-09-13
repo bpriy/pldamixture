@@ -150,15 +150,15 @@ m <- 1
     if(family == "binomial"){
       shape <- NA
       fun <- dbinom(y[sub], m, mu[sub])
-      d_fun <- fun * (y/mu + 1/(1 - mu))[sub]
-      d2_fun <- d_fun * (y/mu + 1/(1 - mu))[sub] + (y^2/(mu^2) - 1/((1 - mu)^2))*fun
+      d_fun <- fun * (y - mu)[sub]
+      d2_fun <- fun * ((y - mu)[sub]^2 - mu[sub] * (1 - mu[sub]))
       return(list(fun = fun, dfun = d_fun, d2fun = d2_fun))
     }
 
     if(family == "gamma"){
       fun <- dgamma(y[sub], shape, shape/mu[sub])
-      d_fun <- fun * (y/mu^2 - 1/mu)[sub] * shape
-      d2_fun <- d_fun * (y/mu^2 - 1/mu)[sub] * shape + (1/mu^2 - y/mu^3) * shape * fun
+      d_fun <- fun * shape * (y/mu - 1)[sub]
+      d2_fun <- fun * (shape^2 * (y/mu - 1)[sub]^2 - shape * (y/mu)[sub])
       return(list(fun = fun, dfun = d_fun, d2fun = d2_fun))
     }
   }
