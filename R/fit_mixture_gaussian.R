@@ -34,9 +34,9 @@ if(missing(mformula)){
   logis_ps <- model.matrix(mformula)}
 }
 
-if(any(is.na(X)) | any(is.na(y))){"Error (formula): Cannot have a missing observations"}
-if(any(is.na(logis_ps))){"Error (mformula): Cannot have a missing observations"}
-if(nrow(logis_ps) != n){"Error (mformula): Number of observations in formula and mformula data should match"}
+  if(any(is.na(X)) | any(is.na(y))){stop("Error (formula): Cannot have missing observations")}
+  if(any(is.na(logis_ps))){stop("Error (mformula): Cannot have missing observations")}
+  if(nrow(logis_ps) != n){stop("Error (mformula): Number of observations in formula and mformula data should match")}
 
 # safe matches (is_flagged)
 if(missing(safematches)){
@@ -45,8 +45,8 @@ if(missing(safematches)){
   is_flagged <- safematches
 }
 
-  if(any(is.na(is_flagged))){"Error (safematches): Cannot have a missing observations"}
-  if(length(is_flagged) != n){"Error (safematches): Length of safematches should match number of observations"}
+  if(any(is.na(is_flagged))){stop("Error (safematches): Cannot have missing observations")}
+  if(length(is_flagged) != n){stop("Error (safematches): Length of safematches should match number of observations")}
 
 # mrate (logitbound)
 if(!missing(mrate)){
@@ -271,7 +271,7 @@ ses[d+1] <- ses[d+1]*(2*stdcur) # delta method for SE of sigma^2
 
 # 5. OUTPUTS
 # -------------------------------------------------------------------------
-list(coefficients = betacur, dispersion = stdcur^2, match.prob = hs,
+list(coefficients = betacur, dispersion = stdcur^2, match.prob = pcur,
      objective = objs[1:(iter)], family = family, standard.errors = ses,
      m.coefficients = gammacur, wfit = wglmfit)
 }

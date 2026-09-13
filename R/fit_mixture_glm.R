@@ -43,9 +43,9 @@ fit_mixture_glm <- function(formula, data, family,
     logis_ps <- model.matrix(mformula)}
   }
 
-  if(any(is.na(X)) | any(is.na(y))){"Error (formula): Cannot have a missing observations"}
-  if(any(is.na(logis_ps))){"Error (mformula): Cannot have a missing observations"}
-  if(nrow(logis_ps) != n){"Error (mformula): Number of observations in formula and mformula data should match"}
+  if(any(is.na(X)) | any(is.na(y))){stop("Error (formula): Cannot have missing observations")}
+  if(any(is.na(logis_ps))){stop("Error (mformula): Cannot have missing observations")}
+  if(nrow(logis_ps) != n){stop("Error (mformula): Number of observations in formula and mformula data should match")}
 
   # safe matches (is_flagged)
   if(missing(safematches)){
@@ -54,8 +54,8 @@ fit_mixture_glm <- function(formula, data, family,
     is_flagged <- safematches
   }
 
-  if(any(is.na(is_flagged))){"Error (safematches): Cannot have a missing observations"}
-  if(length(is_flagged) != n){"Error (safematches): Length of safematches should match number of observations"}
+  if(any(is.na(is_flagged))){stop("Error (safematches): Cannot have missing observations")}
+  if(length(is_flagged) != n){stop("Error (safematches): Length of safematches should match number of observations")}
 
   # mrate (logitbound)
   if(!missing(mrate)){
@@ -333,7 +333,7 @@ m <- 1
 
   # 5. OUTPUTS
   # -------------------------------------------------------------------------
-  output <- list(coefficients = betacur, match.prob = hs,
+  output <- list(coefficients = betacur, match.prob = pcur,
                  objective = objs[1:(iter)], family = family, standard.errors = ses,
                  m.coefficients = gammacur, wfit = wglmfit)
 

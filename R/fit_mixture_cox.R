@@ -49,9 +49,9 @@ fit_mixture_cox <- function(formula, data, family,
       logis_ps <- model.matrix(mformula)}
   }
 
-  if(any(is.na(X)) | any(is.na(y))){"Error (formula): Cannot have a missing observations"}
-  if(any(is.na(logis_ps))){"Error (mformula): Cannot have a missing observations"}
-  if(nrow(logis_ps) != n){"Error (mformula): Number of observations in formula and mformula data should match"}
+  if(any(is.na(X)) | any(is.na(y))){stop("Error (formula): Cannot have missing observations")}
+  if(any(is.na(logis_ps))){stop("Error (mformula): Cannot have missing observations")}
+  if(nrow(logis_ps) != n){stop("Error (mformula): Number of observations in formula and mformula data should match")}
 
   # safe matches (is_flagged)
   if(missing(safematches)){
@@ -60,8 +60,8 @@ fit_mixture_cox <- function(formula, data, family,
     is_flagged <- safematches
   }
 
-  if(any(is.na(is_flagged))){"Error (safematches): Cannot have a missing observations"}
-  if(length(is_flagged) != n){"Error (safematches): Length of safematches should match number of observations"}
+  if(any(is.na(is_flagged))){stop("Error (safematches): Cannot have missing observations")}
+  if(length(is_flagged) != n){stop("Error (safematches): Length of safematches should match number of observations")}
 
   # mrate (logitbound)
   if(!missing(mrate)){
@@ -92,11 +92,13 @@ fit_mixture_cox <- function(formula, data, family,
   }
 
   # initbeta
-  if (initbeta != "default"){
-    betacur <- as.vector(initbeta)
-    if(length(betacur) != p){
-      warning("Default 'initbeta' used. 'initbeta' should be a vector of length ", p)}
-    betacur <- "default"
+  if (initbeta[1] != "default") {
+    beta_cur <- as.vector(initbeta)
+    if(length(beta_cur) != p){
+      warning("Default 'initbeta' used. 'initbeta' should be a vector of length ", p)
+      creg <- coxph(Surv(y, event = 1 - cens) ~ X - 1)
+      beta_cur <- creg$coef
+    }
   } else {
     creg <- coxph(Surv(y, event = 1 - cens) ~ X - 1)
     beta_cur <- creg$coef
@@ -340,7 +342,8 @@ fit_mixture_cox <- function(formula, data, family,
   # 5. OUTPUTS
   # -------------------------------------------------------------------------
   list(coefficients =  beta_cur, m.coefficients = gammacur,
-       match.prob = hs, family = family, objective = objs[1:(iter)],
+       match.prob = pcur, family = family,
+       objective = objs[1:(iter)],
        Lambdahat_0 = Lambdahat_0_,  g_Lambdahat_0= g_Lambdahat_0,
        wfit = creg, standard.errors = se)
 }
