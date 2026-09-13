@@ -63,7 +63,7 @@ library(survival)
 #' The references below discuss the implemented framework in more detail. The standard
 #' errors are estimated using Louis' method for the "cox" family (Bukke et al., 2023) and
 #' using the sandwich formula otherwise (Slawski et al., 2023).\cr\cr
-#' *Corresponding Author (mslawsk3@gmu.edu)
+#' *Corresponding Author (mslawski@virginia.edu)
 #'
 #' @references Slawski, M.*, West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).
 #' A General Framework for Regression with Mismatched Data Based on Mixture Modeling.
@@ -93,7 +93,7 @@ fit_mixture <- function(formula, data, family = "gaussian",
     initbeta <- dcontrols$initbeta
   } else {
     initbeta <- if("initbeta" %in% names(control)){control$initbeta} else{"default"}
-  }  
+  }
 
   if ("initgamma" %in% names(dcontrols)){
     initgamma <- dcontrols$initgamma
@@ -106,7 +106,7 @@ fit_mixture <- function(formula, data, family = "gaussian",
   } else {
     fy <- if("fy" %in% names(control)){control$fy} else{"default"}
   }
-  
+
   if ("maxiter" %in% names(dcontrols)){
     maxiter <- dcontrols$maxiter
   } else {
