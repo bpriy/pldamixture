@@ -2,7 +2,7 @@
 #'
 #'@description
 #'\code{pldamixture} implements the "General Framework for Regression with
-#' Mismatched Data" developed by Slawski et al., 2023. The framework uses a
+#' Mismatched Data" developed by Slawski et al., 2025. The framework uses a
 #' mixture model for pairs of linked records whose two components reflect
 #' distributions conditional on match status, i.e., correct match or mismatch.
 #' Inference is based on composite likelihood and the EM algorithm.\cr\cr
