@@ -201,57 +201,61 @@ while(iter < maxiter){
 
 # 4. STANDARD ERRORS
 # -------------------------------------------------------------------------
-fymu_all_eval <- fymu_all_normal(mucur, stdcur, !is_flagged)
+# Evaluate across all observations
+fymu_all_eval <- fymu_all_normal(mucur, stdcur, rep(TRUE, n))
+hgamma_eval <- hgamma(Delta %*% as.matrix(gammacur))
 
-hgamma_eval <- hgamma(Delta[!is_flagged,] %*% as.matrix(gammacur))
+# probability to 1 and derivatives to 0 for known safe matches
+hgamma_eval$fun[is_flagged] <- 1
+hgamma_eval$dfun[is_flagged] <- 0
+hgamma_eval$d2fun[is_flagged] <- 0
 
-mixprob <- fy[!is_flagged] * (1 - hgamma_eval$fun) +
-  hgamma_eval$fun * fymu_all_eval$fun
+mixprob <- fy * (1 - hgamma_eval$fun) + hgamma_eval$fun * fymu_all_eval$fun
 
-w_beta_score_num <- (-1) * fymu_all_eval$dfun_beta*hgamma_eval$fun
-w_beta_score_denom <- mixprob
-w_beta_score <- w_beta_score_num/w_beta_score_denom
+w_beta_score_num <- (-1) * fymu_all_eval$dfun_beta * hgamma_eval$fun
+w_beta_score <- w_beta_score_num / mixprob
 
-w_sigma_score_num <- (-1) * fymu_all_eval$dfun_sigma*hgamma_eval$fun
-w_sigma_score_denom <- mixprob
-w_sigma_score <- w_sigma_score_num/w_sigma_score_denom
+w_sigma_score_num <- (-1) * fymu_all_eval$dfun_sigma * hgamma_eval$fun
+w_sigma_score <- w_sigma_score_num / mixprob
 
-w_gamma_score_num <- (-1) * (fymu_all_eval$fun -
-                               fy[!is_flagged])*hgamma_eval$dfun
-w_gamma_score_denom <- mixprob
-w_gamma_score <- w_gamma_score_num/w_gamma_score_denom
+w_gamma_score_num <- (-1) * (fymu_all_eval$fun - fy) * hgamma_eval$dfun
+w_gamma_score <- w_gamma_score_num / mixprob
 
-w1 <- w_beta_score^2
-w2 <- w_sigma_score^2
-w3 <- w_gamma_score^2
-
-Xw1 <- sweep(X[!is_flagged,], MARGIN = 1, STATS = w_beta_score, FUN = "*")
-Xw2 <- sweep(matrix(nrow = sum(!is_flagged), ncol = 1, data = 1),
-             MARGIN = 1, STATS = w_sigma_score, FUN = "*")
-Deltaw3 <- sweep(as.matrix(Delta[!is_flagged,]), MARGIN = 1,
-                 STATS = w_gamma_score, FUN = "*")
+Xw1 <- sweep(X, MARGIN = 1, STATS = w_beta_score, FUN = "*")
+Xw2 <- sweep(matrix(1, nrow = n, ncol = 1), MARGIN = 1, STATS = w_sigma_score, FUN = "*")
+Deltaw3 <- sweep(as.matrix(Delta), MARGIN = 1, STATS = w_gamma_score, FUN = "*")
 
 meat <- crossprod(cbind(Xw1, Xw2, Deltaw3))
 
-w_beta2_hess <- (-(hgamma_eval$fun * fymu_all_eval$d2fun_beta)/mixprob) + (w_beta_score)^2
-w_sigma2_hess <- (-(hgamma_eval$fun * fymu_all_eval$d2fun_sigma)/mixprob) + (w_sigma_score)^2
-w_gamma2_hess <- ((-(fymu_all_eval$fun - fy[!is_flagged])*hgamma_eval$d2fun)/mixprob) + (w_gamma_score)^2
-w_beta_gamma_hess <- (-(fymu_all_eval$dfun_beta * hgamma_eval$dfun)/mixprob) + ((fymu_all_eval$fun - fy[!is_flagged])*(hgamma_eval$fun)*hgamma_eval$dfun*fymu_all_eval$dfun_beta)/(mixprob^2)
-w_sigma_gamma_hess <- (-(fymu_all_eval$dfun_sigma * hgamma_eval$dfun)/mixprob) + ((fymu_all_eval$fun - fy[!is_flagged])*(hgamma_eval$fun)*hgamma_eval$dfun*fymu_all_eval$dfun_sigma)/(mixprob^2)
-w_beta_sigma_hess <- (-(fymu_all_eval$d2fun_beta_sigma * hgamma_eval$dfun)/mixprob) + w_beta_score * w_sigma_score
+w_beta2_hess <- (-(hgamma_eval$fun * fymu_all_eval$d2fun_beta) / mixprob) + (w_beta_score)^2
+w_sigma2_hess <- (-(hgamma_eval$fun * fymu_all_eval$d2fun_sigma) / mixprob) + (w_sigma_score)^2
+w_gamma2_hess <- (-(fymu_all_eval$fun - fy) * hgamma_eval$d2fun / mixprob) + (w_gamma_score)^2
 
-Xw4 <- sweep(X[!is_flagged,], MARGIN = 1, STATS = w_beta2_hess, FUN = "*")
-Deltaw6 <- sweep(as.matrix(Delta[!is_flagged,]), MARGIN = 1, STATS = w_gamma2_hess, FUN = "*")
-Xw5 <-  sweep(X[!is_flagged,], MARGIN = 1, STATS = w_beta_gamma_hess, FUN = "*")
+w_beta_gamma_hess <- (-(fymu_all_eval$dfun_beta * hgamma_eval$dfun) / mixprob) +
+  ((fymu_all_eval$fun - fy) * hgamma_eval$fun * hgamma_eval$dfun * fymu_all_eval$dfun_beta) / (mixprob^2)
+
+w_sigma_gamma_hess <- (-(fymu_all_eval$dfun_sigma * hgamma_eval$dfun) / mixprob) +
+  ((fymu_all_eval$fun - fy) * hgamma_eval$fun * hgamma_eval$dfun * fymu_all_eval$dfun_sigma) / (mixprob^2)
+
+# use hgamma_eval$fun instead of $dfun here
+w_beta_sigma_hess <- (-(fymu_all_eval$d2fun_beta_sigma * hgamma_eval$fun) / mixprob) + w_beta_score * w_sigma_score
+
+Xw4 <- sweep(X, MARGIN = 1, STATS = w_beta2_hess, FUN = "*")
+Deltaw6 <- sweep(as.matrix(Delta), MARGIN = 1, STATS = w_gamma2_hess, FUN = "*")
+Xw5 <- sweep(X, MARGIN = 1, STATS = w_beta_gamma_hess, FUN = "*")
+
 d <- ncol(X)
-Hess <- matrix(nrow = d + 1 + ncol(Delta), ncol =  d + 1 + ncol(Delta))
-one_vector <- matrix(nrow = sum(!is_flagged), ncol = 1, data = 1)
-Hess[1:d, 1:d] <- crossprod(X[!is_flagged,], Xw4)
+Hess <- matrix(0, nrow = d + 1 + ncol(Delta), ncol = d + 1 + ncol(Delta))
+one_vector <- matrix(1, nrow = n, ncol = 1)
+
+Hess[1:d, 1:d] <- crossprod(X, Xw4)
 Hess[d+1, d+1] <- crossprod(one_vector, sweep(one_vector, MARGIN = 1, STATS = w_sigma2_hess, FUN = "*"))
-Hess[(d+2):(d+ncol(Delta)+1), (d+2):(d+ncol(Delta)+1)] <- crossprod(Delta[!is_flagged,], Deltaw6)
-Hess[1:(d+1), (d+2):(d+ncol(Delta)+1)] <- rbind(crossprod(Xw5, Delta[!is_flagged,]), crossprod(sweep(one_vector, MARGIN = 1, STATS = w_sigma_gamma_hess, FUN = "*"), Delta[!is_flagged,]))
+Hess[(d+2):(d+ncol(Delta)+1), (d+2):(d+ncol(Delta)+1)] <- crossprod(Delta, Deltaw6)
+
+Hess[1:(d+1), (d+2):(d+ncol(Delta)+1)] <- rbind(crossprod(Xw5, Delta),
+                                                crossprod(sweep(one_vector, MARGIN = 1, STATS = w_sigma_gamma_hess, FUN = "*"), Delta))
 Hess[(d+2):(d+ncol(Delta)+1), 1:(d+1)] <- t(Hess[1:(d+1), (d+2):(d+ncol(Delta)+1)])
-Hess[1:d, d+1] <- crossprod(X[!is_flagged,], sweep(one_vector, MARGIN = 1, STATS = w_beta_sigma_hess, FUN = "*"))
+Hess[1:d, d+1] <- crossprod(X, sweep(one_vector, MARGIN = 1, STATS = w_beta_sigma_hess, FUN = "*"))
 Hess[d+1, 1:d] <- t(Hess[1:d, d+1])
 
 cov_1_hat  <- solve(Hess, meat)
