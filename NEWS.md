@@ -1,8 +1,7 @@
 # Updates on GitHub
 
 ### General Notes
-* Upcoming Package Transition: Please note that `pldamixture` will soon be superseded by the upcoming `postlink` package. 
-* Acknowledgements: Special thanks to @tbrown122387 for reporting three issues (first three items below) that were addressed in this update!
+* Special thanks to @tbrown122387 for reporting three issues (first three items below) that were addressed in this update!
 
 ### Bug Fixes & Improvements
 * `summary.fitmixture`: Fixed a bug so the function correctly returns `match.prob` instead of `hs`, and improved standard error indexing to use regex (`grepl("gamma", ...)`) rather than hardcoded indices.
