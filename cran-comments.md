@@ -11,9 +11,11 @@ The previous maintainer email address (pbukke@gmu.edu) has sent authorization fo
 ## R CMD check results
 0 errors | 0 warnings | 1 notes
 
-**Check: CRAN incoming feasibility, Result: INFO**
-
+* checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Priyanjali Bukke <postlink.group@gmail.com>'
+
+  New maintainer:
+  Priyanjali Bukke <postlink.group@gmail.com>
 
   Explanation: This information is accurate.  I would like to confirm that the DESCRIPTION file lists my name and email address as the single designated maintainer, and that the email address is not a mailing list. I do not distribute CRAN messages, and the address is used solely for maintaining our software packages (as my university email account will expire soon). The Gmail account profile name is accordingly "postlink maintainer", in case that is helpful.
 
