@@ -15,7 +15,7 @@ The previous maintainer email address (pbukke@gmu.edu) has sent authorization fo
 
   Maintainer: 'Priyanjali Bukke <postlink.group@gmail.com>'
 
-  Explanation: This information is accurate.  I would like to confirm that the DESCRIPTION file lists my name and email address as the single designated maintainer, and that the email address is not a mailing list. I do not distribute CRAN messages, and the address is used solely for maintaining our software packages (as my university email account will expire soon). I have also updated the Gmail account profile name accordingly ("postlink maintainer"), in case that is helpful.
+  Explanation: This information is accurate.  I would like to confirm that the DESCRIPTION file lists my name and email address as the single designated maintainer, and that the email address is not a mailing list. I do not distribute CRAN messages, and the address is used solely for maintaining our software packages (as my university email account will expire soon). The Gmail account profile name is accordingly "postlink maintainer", in case that is helpful.
 
 ## Reverse dependencies
 There are currently no reverse dependencies for this package.
