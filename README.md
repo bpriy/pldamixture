@@ -1,6 +1,8 @@
 # Post-Linkage Data Analysis Based on Mixture Modelling
 
 <!-- badges: start -->
+[![CRAN
+status](https://www.r-pkg.org/badges/version/postlink)](https://CRAN.R-project.org/package=pldamixture)
 [![R-CMD-check](https://github.com/bpriy/pldamixture/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bpriy/pldamixture/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
   
