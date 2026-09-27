@@ -4,34 +4,18 @@
 \alias{predict.fitmixture}
 \title{Predictions From a "fitmixture" Object}
 \usage{
-\method{predict}{fitmixture}(
-  object,
-  newdata,
-  type,
-  terms = NULL,
-  na.action = na.pass,
-  reference = "strata",
-  ...
-)
+\method{predict}{fitmixture}(object, newdata, type, terms = NULL, na.action = na.pass, ...)
 }
 \arguments{
 \item{object}{the result of a call to \code{fit_mixture()}}
 
 \item{newdata}{optional new data to obtain predictions for. The original data is used by default.}
 
-\item{type}{the type of prediction. For the "cox" family, the choices are the linear predictor ("lp"), the risk score exp(lp) ("risk"),
-the expected number of events given the covariates and follow-up time ("expected"),
-and the terms of the linear predictor ("terms"). The survival probability for a subject is
-equal to exp(-expected). For the "gaussian" family, the choices are response ("response") or model term ("terms").
-For the other glm families ("poisson", "binomial", "gamma"), the choices are predictions on the scale of the linear predictors ("link"),
-response ("response"), or model term ("terms").}
+\item{type}{the type of prediction. When \code{newdata} is provided: for the "cox" family, the choices are the linear predictor ("lp") and the risk score exp(lp) ("risk"). For the "gaussian" family and all other glm families ("poisson", "binomial", "gamma"), the choices are predictions on the scale of the linear predictors ("link") or the response ("response"). When \code{newdata} is omitted, additional types such as "terms" or "expected" may be supported by the underlying predict methods.}
 
-\item{terms}{the terms when type = "terms". By default, all terms are included.}
+\item{terms}{the terms when type = "terms". By default, all terms are included. Note: This is only supported when \code{newdata} is omitted.}
 
 \item{na.action}{a function for what to do with missing values in \code{newdata}. The default is to predict "NA".}
-
-\item{reference}{when family = "cox", reference for centering predictions. Available options are c("strata" - default,
-"sample", "zero"). The default is "strata".}
 
 \item{...}{for future predict arguments}
 }
@@ -39,7 +23,7 @@ response ("response"), or model term ("terms").}
 a vector or matrix of predictions based on arguments specified.
 }
 \description{
-Obtain predictions from a \code{fit_mixture()} object using \code{predict.coxph()}, \code{predict.glm()}, or \code{predict.lm()}.
+Obtain predictions from a \code{fit_mixture()} object. If \code{newdata} is omitted, predictions are obtained using the underlying model's predict method (\code{predict.coxph()}, \code{predict.glm()}, or \code{predict.lm()}). If \code{newdata} is provided, predictions are computed directly from the reconstructed model matrix and estimated coefficients.
 }
 \examples{
 ## commonness score of first and last names used for linkage

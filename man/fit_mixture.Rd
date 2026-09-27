@@ -76,7 +76,7 @@ matches).
 The references below discuss the implemented framework in more detail. The standard
 errors are estimated using Louis' method for the "cox" family (Bukke et al., 2023) and
 using the sandwich formula otherwise (Slawski et al., 2023).\cr\cr
-*Corresponding Author (mslawsk3@gmu.edu)
+*Corresponding Author (mslawski@virginia.edu)
 }
 \examples{
 ## commonness score of first and last names used for linkage
@@ -91,13 +91,14 @@ fit <- fit_mixture(age_at_death ~ poly(unit_yob, 3, raw = TRUE), data = lifem,
 
 }
 \references{
-Slawski, M.*, West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).
+Slawski, M.*, West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2025).
 A General Framework for Regression with Mismatched Data Based on Mixture Modeling.
-Under Review. < \doi{10.48550/arXiv.2306.00909} >\cr
+\emph{Journal of the Royal Statistical Society Series A: Statistics in Society},
+188(3), 896-919. < \doi{10.48550/arXiv.2306.00909} >\cr
 
-Bukke, P., Ben-David, E., Diao, G., Slawski, M.*, & West, B. T. (2023).
+Bukke, P., Ben-David, E., Diao, G., Slawski, M.*, & West, B. T. (2025).
 Cox Proportional Hazards Regression Using Linked Data: An Approach Based on Mixture Modelling.
-Under Review. \cr
+\cr
 
 Slawski, M.*, Diao, G., Ben-David, E. (2021). A pseudo-likelihood approach to linear
 regression with partially shuffled data. Journal of Computational and Graphical

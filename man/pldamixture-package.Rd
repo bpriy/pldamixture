@@ -2,11 +2,12 @@
 % Please edit documentation in R/pldamixture-package.R
 \docType{package}
 \name{pldamixture-package}
+\alias{pldamixture}
 \alias{pldamixture-package}
 \title{Post-Linkage Data Analysis Based on Mixture Modelling}
 \description{
 \code{pldamixture} implements the "General Framework for Regression with
-Mismatched Data" developed by Slawski et al., 2023. The framework uses a
+Mismatched Data" developed by Slawski et al., 2025. The framework uses a
 mixture model for pairs of linked records whose two components reflect
 distributions conditional on match status, i.e., correct match or mismatch.
 Inference is based on composite likelihood and the EM algorithm.\cr\cr
@@ -15,7 +16,7 @@ The package contains 4 functions for usage:\cr \code{fit_mixture}\cr
 }
 \note{
 The references below discuss the implemented framework in more detail.\cr\cr
-*Corresponding Author (mslawsk3@gmu.edu)
+*Corresponding Author (mslawski@virginia.edu)
 }
 \examples{
 # optional inputs for linear regression of age at death on year of birth,
@@ -35,15 +36,37 @@ summary(fit)
 predict(fit)
 }
 \references{
-Slawski, M.*, West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2023).
+Slawski, M.*, West, B. T., Bukke, P., Diao, G., Wang, Z., & Ben-David, E. (2025).
 A General Framework for Regression with Mismatched Data Based on Mixture Modeling.
-Under Review. < \doi{10.48550/arXiv.2306.00909} >\cr
+\emph{Journal of the Royal Statistical Society Series A: Statistics in Society},
+188(3), 896-919. < \doi{10.48550/arXiv.2306.00909} >\cr
 
-Bukke, P., Ben-David, E., Diao, G., Slawski, M.*, & West, B. T. (2023).
+Bukke, P., Ben-David, E., Diao, G., Slawski, M.*, & West, B. T. (2025).
 Cox Proportional Hazards Regression Using Linked Data: An Approach Based on Mixture Modelling.
-Under Review. \cr
+\cr
 
 Slawski, M.*, Diao, G., Ben-David, E. (2021). A pseudo-likelihood approach to linear
 regression with partially shuffled data. Journal of Computational and Graphical
 Statistics. 30(4), 991-1003 < \doi{10.1080/10618600.2020.1870482} >
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/bpriy/pldamixture}
+}
+
+}
+\author{
+\strong{Maintainer}: Priyanjali Bukke \email{postlink.group@gmail.com}
+
+Authors:
+\itemize{
+  \item Priyanjali Bukke \email{postlink.group@gmail.com}
+  \item Zhenbang Wang
+  \item Martin Slawski \email{mslawski@virginia.edu} (mslawski@virginia.edu)
+  \item Brady T. West
+  \item Emanuel Ben-David
+  \item Guoqing Diao
+}
+
 }
