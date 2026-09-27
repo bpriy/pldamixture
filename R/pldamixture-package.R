@@ -1,4 +1,4 @@
-#' Post-Linkage Data Analysis Based on Mixture Modelling
+#' @title pldamixture: Post-Linkage Data Analysis Based on Mixture Modelling
 #'
 #'@description
 #'\code{pldamixture} implements the "General Framework for Regression with
@@ -8,9 +8,6 @@
 #' Inference is based on composite likelihood and the EM algorithm.\cr\cr
 #' The package contains 4 functions for usage:\cr \code{fit_mixture}\cr
 #' \code{print.fitmixture}\cr \code{summary.fitmixture}\cr \code{predict.fitmixture}
-#'
-#' @name pldamixture-package
-#' @docType package
 #'
 #' @note
 #' The references below discuss the implemented framework in more detail.\cr\cr
@@ -45,4 +42,5 @@
 #' print(fit)
 #' summary(fit)
 #' predict(fit)
+"_PACKAGE"
 NULL

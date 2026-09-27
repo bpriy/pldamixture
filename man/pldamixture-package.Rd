@@ -4,7 +4,7 @@
 \name{pldamixture-package}
 \alias{pldamixture}
 \alias{pldamixture-package}
-\title{Post-Linkage Data Analysis Based on Mixture Modelling}
+\title{pldamixture: Post-Linkage Data Analysis Based on Mixture Modelling}
 \description{
 \code{pldamixture} implements the "General Framework for Regression with
 Mismatched Data" developed by Slawski et al., 2025. The framework uses a
