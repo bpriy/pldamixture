@@ -43,9 +43,9 @@ fit_mixture_glm <- function(formula, data, family,
     logis_ps <- model.matrix(mformula)}
   }
 
-  if(any(is.na(X)) | any(is.na(y))){"Error (formula): Cannot have a missing observations"}
-  if(any(is.na(logis_ps))){"Error (mformula): Cannot have a missing observations"}
-  if(nrow(logis_ps) != n){"Error (mformula): Number of observations in formula and mformula data should match"}
+  if(any(is.na(X)) | any(is.na(y))){stop("Error (formula): Cannot have missing observations")}
+  if(any(is.na(logis_ps))){stop("Error (mformula): Cannot have missing observations")}
+  if(nrow(logis_ps) != n){stop("Error (mformula): Number of observations in formula and mformula data should match")}
 
   # safe matches (is_flagged)
   if(missing(safematches)){
@@ -54,8 +54,8 @@ fit_mixture_glm <- function(formula, data, family,
     is_flagged <- safematches
   }
 
-  if(any(is.na(is_flagged))){"Error (safematches): Cannot have a missing observations"}
-  if(length(is_flagged) != n){"Error (safematches): Length of safematches should match number of observations"}
+  if(any(is.na(is_flagged))){stop("Error (safematches): Cannot have missing observations")}
+  if(length(is_flagged) != n){stop("Error (safematches): Length of safematches should match number of observations")}
 
   # mrate (logitbound)
   if(!missing(mrate)){
@@ -150,15 +150,15 @@ m <- 1
     if(family == "binomial"){
       shape <- NA
       fun <- dbinom(y[sub], m, mu[sub])
-      d_fun <- fun * (y/mu + 1/(1 - mu))[sub]
-      d2_fun <- d_fun * (y/mu + 1/(1 - mu))[sub] + (y^2/(mu^2) - 1/((1 - mu)^2))*fun
+      d_fun <- fun * (y - mu)[sub]
+      d2_fun <- fun * ((y - mu)[sub]^2 - mu[sub] * (1 - mu[sub]))
       return(list(fun = fun, dfun = d_fun, d2fun = d2_fun))
     }
 
     if(family == "gamma"){
       fun <- dgamma(y[sub], shape, shape/mu[sub])
-      d_fun <- fun * (y/mu^2 - 1/mu)[sub] * shape
-      d2_fun <- d_fun * (y/mu^2 - 1/mu)[sub] * shape + (1/mu^2 - y/mu^3) * shape * fun
+      d_fun <- fun * shape * (y/mu - 1)[sub]
+      d2_fun <- fun * (shape^2 * (y/mu - 1)[sub]^2 - shape * (y/mu)[sub])
       return(list(fun = fun, dfun = d_fun, d2fun = d2_fun))
     }
   }
@@ -283,40 +283,43 @@ m <- 1
 
   # 4. STANDARD ERRORS
   # -------------------------------------------------------------------------
-  fymu_all_eval <- fymu_all_GLM(mucur, !is_flagged, family, shape)
-  hgamma_eval <- hgamma(Delta[!is_flagged,] %*% as.matrix(gammacur))
-  # beta, score, numerator
-  mixprob <- fy[!is_flagged] * (1 - hgamma_eval$fun) + hgamma_eval$fun * fymu_all_eval$fun
+  # Evaluate across all observations
+  fymu_all_eval <- fymu_all_GLM(mucur, rep(TRUE, n), family, shape)
+  hgamma_eval <- hgamma(Delta %*% as.matrix(gammacur))
 
-  w_beta_score_num <- (-1) * fymu_all_eval$dfun*hgamma_eval$fun
-  w_beta_score_denom <- mixprob
-  w_beta_score <- w_beta_score_num/w_beta_score_denom
+  # probability to 1 and derivatives to 0 for known safe matches
+  hgamma_eval$fun[is_flagged] <- 1
+  hgamma_eval$dfun[is_flagged] <- 0
+  hgamma_eval$d2fun[is_flagged] <- 0
 
-  w_gamma_score_num <- (-1) * (fymu_all_eval$fun - fy[!is_flagged])*hgamma_eval$dfun
-  w_gamma_score_denom <- mixprob
-  w_gamma_score <- w_gamma_score_num/w_gamma_score_denom
+  mixprob <- fy * (1 - hgamma_eval$fun) + hgamma_eval$fun * fymu_all_eval$fun
 
-  w1 <- w_beta_score^2
-  w3 <- w_gamma_score^2
+  w_beta_score_num <- (-1) * fymu_all_eval$dfun * hgamma_eval$fun
+  w_beta_score <- w_beta_score_num / mixprob
 
-  Xw1 <- sweep(X[!is_flagged,], MARGIN = 1, STATS = w_beta_score, FUN = "*")
-  Deltaw3 <- sweep(as.matrix(Delta[!is_flagged,]), MARGIN = 1, STATS = w_gamma_score, FUN = "*")
+  w_gamma_score_num <- (-1) * (fymu_all_eval$fun - fy) * hgamma_eval$dfun
+  w_gamma_score <- w_gamma_score_num / mixprob
+
+  Xw1 <- sweep(X, MARGIN = 1, STATS = w_beta_score, FUN = "*")
+  Deltaw3 <- sweep(as.matrix(Delta), MARGIN = 1, STATS = w_gamma_score, FUN = "*")
 
   meat <- crossprod(cbind(Xw1, Deltaw3))
 
-  w_beta2_hess <- (-(hgamma_eval$fun * fymu_all_eval$d2fun)/mixprob) + (w_beta_score)^2
-  w_gamma2_hess <- ((-(fymu_all_eval$fun - fy[!is_flagged])*hgamma_eval$d2fun)/mixprob) + (w_gamma_score)^2
-  w_beta_gamma_hess <- (-(fymu_all_eval$dfun * hgamma_eval$dfun)/mixprob) + ((fymu_all_eval$fun - fy[!is_flagged])*(hgamma_eval$fun)*hgamma_eval$dfun*fymu_all_eval$dfun)/(mixprob^2)
+  w_beta2_hess <- (-(hgamma_eval$fun * fymu_all_eval$d2fun) / mixprob) + (w_beta_score)^2
+  w_gamma2_hess <- (-(fymu_all_eval$fun - fy) * hgamma_eval$d2fun / mixprob) + (w_gamma_score)^2
+  w_beta_gamma_hess <- (-(fymu_all_eval$dfun * hgamma_eval$dfun) / mixprob) +
+    ((fymu_all_eval$fun - fy) * hgamma_eval$fun * hgamma_eval$dfun * fymu_all_eval$dfun) / (mixprob^2)
 
-  Xw4 <- sweep(X[!is_flagged,], MARGIN = 1, STATS = w_beta2_hess, FUN = "*")
-  Deltaw6 <- sweep(as.matrix(Delta[!is_flagged,]), MARGIN = 1, STATS = w_gamma2_hess, FUN = "*")
-  Xw5 <-  sweep(X[!is_flagged,], MARGIN = 1, STATS = w_beta_gamma_hess, FUN = "*")
+  Xw4 <- sweep(X, MARGIN = 1, STATS = w_beta2_hess, FUN = "*")
+  Deltaw6 <- sweep(as.matrix(Delta), MARGIN = 1, STATS = w_gamma2_hess, FUN = "*")
+  Xw5 <- sweep(X, MARGIN = 1, STATS = w_beta_gamma_hess, FUN = "*")
+
   d <- ncol(X)
-  Hess <- matrix(nrow = d + ncol(Delta), ncol =  d + ncol(Delta))
-  one_vector <- matrix(nrow = sum(!is_flagged), ncol = 1, data = 1)
-  Hess[1:d, 1:d] <- crossprod(X[!is_flagged,], Xw4)
-  Hess[(d+1):(d+ncol(Delta)), (d+1):(d+ncol(Delta))] <- crossprod(Delta[!is_flagged,], Deltaw6)
-  Hess[1:d, (d+1):(d+ncol(Delta))] <- crossprod(Xw5, Delta[!is_flagged,])
+  Hess <- matrix(0, nrow = d + ncol(Delta), ncol = d + ncol(Delta))
+
+  Hess[1:d, 1:d] <- crossprod(X, Xw4)
+  Hess[(d+1):(d+ncol(Delta)), (d+1):(d+ncol(Delta))] <- crossprod(Delta, Deltaw6)
+  Hess[1:d, (d+1):(d+ncol(Delta))] <- crossprod(Xw5, Delta)
   Hess[(d+1):(d+ncol(Delta)), 1:d] <- t(Hess[1:d, (d+1):(d+ncol(Delta))])
 
   cov_1_hat  <- solve(Hess, meat)
@@ -333,7 +336,7 @@ m <- 1
 
   # 5. OUTPUTS
   # -------------------------------------------------------------------------
-  output <- list(coefficients = betacur, match.prob = hs,
+  output <- list(coefficients = betacur, match.prob = pcur,
                  objective = objs[1:(iter)], family = family, standard.errors = ses,
                  m.coefficients = gammacur, wfit = wglmfit)
 

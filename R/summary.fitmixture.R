@@ -39,11 +39,8 @@ summary.fitmixture <- function(object,...){
                  tval, pval)
     colnames(TAB) <- c("Estimate","Std. Error", "t value", "Pr(>|t|)")
     rownames(TAB) <- substring(rownames(TAB), first=2)
-    if (object$family == "gamma"){
-      TAB2 <- cbind(object$m.coefficients, object$standard.errors[l2:e])
-    } else {
-      TAB2 <- cbind(object$m.coefficients, object$standard.errors[(l2+1):e])
-    }
+    gamma_idx <- grepl("gamma", names(object$standard.errors))
+    TAB2 <- cbind(object$m.coefficients, object$standard.errors[gamma_idx])
     colnames(TAB2) <- c("Estimate","Std. Error")
   }
 
@@ -56,7 +53,8 @@ summary.fitmixture <- function(object,...){
                  zval, pval)
     colnames(TAB) <- c("Estimate","Std. Error", "z value", "Pr(>|z|)")
     rownames(TAB) <- substring(rownames(TAB), first=2)
-    TAB2 <- cbind(object$m.coefficients, object$standard.errors[l2:e])
+    gamma_idx <- grepl("gamma", names(object$standard.errors))
+    TAB2 <- cbind(object$m.coefficients, object$standard.errors[gamma_idx])
     colnames(TAB2) <- c("Estimate","Std. Error")
   }
 
@@ -70,7 +68,8 @@ summary.fitmixture <- function(object,...){
                  zval, pval)
     colnames(TAB) <- c("coef", "exp(coef)", "se(coef)", "z value", "Pr(>|z|)")
     rownames(TAB) <- substring(rownames(TAB), first=2)
-    TAB2 <- cbind(object$m.coefficients, object$standard.errors[l2:e])
+    gamma_idx <- grepl("gamma", names(object$standard.errors))
+    TAB2 <- cbind(object$m.coefficients, object$standard.errors[gamma_idx])
     colnames(TAB2) <- c("Estimate","Std. Error")
   }
 
@@ -81,8 +80,8 @@ summary.fitmixture <- function(object,...){
   }
 
   object <- list(call = object$call, family = object$family,
-                         coefficients = TAB, m.coefficients = TAB2,
-                         avgcmr = mean(object$match.prob), match.prob = object$hs)
+                 coefficients = TAB, m.coefficients = TAB2,
+                 avgcmr = mean(object$match.prob), match.prob = object$match.prob)
 
   if (object$family == "gamma"){
     object <- append(object, object$dispersion)
